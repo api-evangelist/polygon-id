@@ -1,0 +1,177 @@
+name: Polygon ID
+description: >
+  Polygon ID (now operating as Privado ID) is a self-sovereign identity platform
+  that enables issuers to create and manage decentralized identifiers (DIDs) and
+  verifiable credentials (VCs) using zero-knowledge proof cryptography. Built on
+  the iden3 protocol and the Polygon blockchain, it allows organizations to issue
+  privacy-preserving credentials — such as KYC attestations, age proofs, and
+  reputation signals — while giving users full control over their identity data.
+  Verifiers can authenticate users and gate access using ZK queries without
+  learning underlying personal information.
+image: https://www.privado.id/img/logo.png
+tags:
+  - Identity
+  - Verifiable Credentials
+  - Zero-Knowledge Proofs
+  - Self-Sovereign Identity
+  - Decentralized Identity
+  - Blockchain
+  - Web3
+  - KYC
+url: https://www.privado.id/
+specificationVersion: "0.19"
+apis:
+
+  - name: Polygon ID Issuer Node API
+    description: >
+      The Issuer Node REST API provides full lifecycle management of decentralized
+      identities and verifiable credentials. Issuers use it to create DIDs on
+      supported Polygon networks, issue and revoke credentials, manage credential
+      schemas, handle wallet-based authentication flows via JWZ tokens, and
+      publish identity state on-chain. The API also covers payment requests,
+      display methods, and key management.
+    image: https://www.privado.id/img/logo.png
+    humanURL: https://docs.privado.id/docs/issuer-node/issuer-node-api/introduction/
+    baseURL: https://issuer-node-core-api-testing.privado.id
+    tags:
+      - Identity Management
+      - Verifiable Credentials
+      - Zero-Knowledge Proofs
+      - DID
+      - Credential Issuance
+      - Credential Revocation
+      - Authentication
+      - Schemas
+      - Payment
+      - Key Management
+    properties:
+      - type: Documentation
+        url: https://docs.privado.id/docs/issuer-node/issuer-node-api/introduction/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/0xPolygonID/issuer-node/main/api/api.yaml
+      - type: GitHubRepository
+        url: https://github.com/0xPolygonID/issuer-node
+      - type: Swagger
+        url: https://issuer-node-core-api-testing.privado.id/
+      - type: Plans
+        url: https://github.com/api-evangelist/polygon-id/blob/main/plans/plans.yml
+      - type: RateLimits
+        url: https://github.com/api-evangelist/polygon-id/blob/main/rate-limits/rate-limits.yml
+      - type: FinOps
+        url: https://github.com/api-evangelist/polygon-id/blob/main/finops/finops.yml
+    contact:
+      - FN: Privado ID Support
+        url: https://support.polygon.technology/support/solutions/82000473421
+      - FN: Privado ID GitHub
+        url: https://github.com/0xPolygonID
+      - FN: Privado ID Twitter/X
+        url: https://x.com/PrivadoID
+
+  - name: Polygon ID Verifier SDK
+    description: >
+      The Verifier SDK enables web2 and web3 applications to authenticate users
+      based on verifiable credentials without accessing the underlying personal
+      data. Verifiers compose ZK queries using the Query Builder, generate QR
+      codes or Universal Links, and receive zero-knowledge proofs from user
+      wallets. Supports both off-chain verification (server-side) and on-chain
+      verification via Polygon smart contracts.
+    image: https://www.privado.id/img/logo.png
+    humanURL: https://docs.privado.id/docs/verifier/verifier-overview/
+    baseURL: https://tools.privado.id
+    tags:
+      - Verification
+      - Zero-Knowledge Proofs
+      - Authentication
+      - On-chain Verification
+      - Off-chain Verification
+      - QR Code
+      - Smart Contracts
+    properties:
+      - type: Documentation
+        url: https://docs.privado.id/docs/verifier/verifier-overview/
+      - type: GitHubRepository
+        url: https://github.com/0xPolygonID/verifier-backend
+      - type: QueryBuilder
+        url: https://tools.privado.id/query-builder
+      - type: JWZValidator
+        url: https://jwz-validator.privado.id
+    contact:
+      - FN: Privado ID Documentation
+        url: https://docs.privado.id/
+
+  - name: Polygon ID JavaScript SDK
+    description: >
+      The JS-SDK enables browser-based applications, extensions, and dApps to
+      implement identity wallet functionality, create and manage DIDs, generate
+      ZK proofs, and interact with the iden3 protocol directly. Supports
+      credential storage, proof generation, and communication with issuer and
+      verifier nodes.
+    image: https://www.privado.id/img/logo.png
+    humanURL: https://docs.privado.id/docs/js-sdk/js-sdk-overview/
+    baseURL: https://www.npmjs.com/package/@0xpolygonid/js-sdk
+    tags:
+      - JavaScript
+      - SDK
+      - Browser
+      - dApp
+      - Identity Wallet
+      - ZK Proofs
+      - iden3
+    properties:
+      - type: Documentation
+        url: https://docs.privado.id/docs/js-sdk/js-sdk-overview/
+      - type: GitHubRepository
+        url: https://github.com/0xPolygonID/js-sdk
+      - type: NPMPackage
+        url: https://www.npmjs.com/package/@0xpolygonid/js-sdk
+    contact:
+      - FN: Privado ID GitHub
+        url: https://github.com/0xPolygonID
+
+  - name: Polygon ID Wallet SDK (Flutter)
+    description: >
+      Flutter plugin for integrating Polygon ID wallet capabilities into mobile
+      applications. Provides identity creation, credential storage, ZK proof
+      generation, and protocol communication for both Android and iOS.
+    image: https://www.privado.id/img/logo.png
+    humanURL: https://docs.privado.id/docs/wallet/flutter-sdk/
+    baseURL: https://pub.dev/packages/polygonid_flutter_sdk
+    tags:
+      - Flutter
+      - Mobile SDK
+      - Android
+      - iOS
+      - Wallet
+      - ZK Proofs
+    properties:
+      - type: Documentation
+        url: https://docs.privado.id/docs/wallet/flutter-sdk/
+      - type: GitHubRepository
+        url: https://github.com/0xPolygonID/polygonid-flutter-sdk
+      - type: PubDev
+        url: https://pub.dev/packages/polygonid_flutter_sdk
+    contact:
+      - FN: Privado ID GitHub
+        url: https://github.com/0xPolygonID
+
+common:
+  - type: GitHubOrganization
+    url: https://github.com/0xPolygonID
+  - type: Documentation
+    url: https://docs.privado.id/
+  - type: Website
+    url: https://www.privado.id/
+  - type: Blog
+    url: https://www.privado.id/blog
+  - type: YouTube
+    url: https://www.youtube.com/@PrivadoID
+  - type: Twitter
+    url: https://x.com/PrivadoID
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/privado-id
+  - type: Support
+    url: https://support.polygon.technology/support/solutions/82000473421
+  - type: SchemaExplorer
+    url: https://schema-builder.polygonid.me/
+  - type: QueryBuilder
+    url: https://tools.privado.id/query-builder

@@ -1,0 +1,55 @@
+name: Polygon ID (Privado ID) FinOps
+description: >
+  Financial operations considerations for teams adopting Polygon ID / Privado ID
+  for self-sovereign identity and verifiable credentials.
+url: https://www.privado.id/
+
+cost_model: open-source-with-managed-upsell
+
+cost_centers:
+
+  - name: Infrastructure (Self-Hosted)
+    description: >
+      Running the Issuer Node requires hosting a Go server plus PostgreSQL
+      and Redis dependencies (typically Docker Compose or Kubernetes).
+    cost_drivers:
+      - Cloud VM or container compute (≥ 1 vCPU, ≥ 2 GB RAM recommended)
+      - Managed PostgreSQL storage
+      - Redis cache
+      - Egress bandwidth
+    estimate: Varies by cloud provider; typical small deployment ≈ $30–$100/month
+
+  - name: Blockchain Gas Fees
+    description: >
+      Publishing identity state on-chain and on-chain ZK proof verification
+      incur gas costs on Polygon PoS or zkEVM.
+    cost_drivers:
+      - State publication transactions per identity
+      - On-chain verification smart contract calls
+      - MATIC / POL token price fluctuation
+    estimate: Low per-transaction; scales with number of identities and revocations
+
+  - name: Managed Cloud Credential Fees (Future)
+    description: >
+      Privado ID plans per-credential-use fees charged to verifiers.
+      Pricing not yet publicly available (as of June 2026).
+    cost_drivers:
+      - Number of credential verifications
+      - Number of new wallet users onboarded (one-time fee per user)
+      - Revocation and trust registry operations
+    estimate: TBD — contact Privado ID sales
+
+  - name: Enterprise Support Contract
+    description: >
+      Custom pricing for private infrastructure, SLA guarantees, and
+      dedicated engineering for government or large enterprise use cases.
+    estimate: Custom — contact https://www.privado.id/
+
+optimization_tips:
+  - Batch on-chain state publications to reduce gas costs (publish after
+    multiple credential issuances rather than per credential).
+  - Use the Amoy testnet for development and QA to avoid mainnet gas costs.
+  - Choose off-chain verification over on-chain where possible to eliminate
+    smart contract gas overhead.
+  - Right-size the Issuer Node deployment; most issuers do not require
+    high-availability redundancy during early adoption.

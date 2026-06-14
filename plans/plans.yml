@@ -1,0 +1,55 @@
+name: Polygon ID (Privado ID) Plans
+description: >
+  Polygon ID (rebranded as Privado ID) is open-source and free to self-host.
+  Revenue is generated through managed cloud services, credential transaction
+  fees, and enterprise support contracts.
+url: https://www.privado.id/
+plans:
+  - name: Open Source / Self-Hosted
+    description: >
+      The full Issuer Node, Verifier SDK, and JS-SDK are available under
+      Apache-2.0 and MIT licenses. Operators run their own infrastructure
+      at no licensing cost.
+    price: 0
+    currency: USD
+    period: month
+    features:
+      - Self-hosted Issuer Node (Docker)
+      - Full REST API (identity, credentials, agent, auth, schemas, keys, payment)
+      - Verifier SDK (off-chain and on-chain)
+      - JS-SDK for browser / dApp integration
+      - Flutter and React Native wallet SDKs
+      - Unlimited identities and credentials on own infrastructure
+      - Community support via Discord / GitHub Issues
+    rate_limits: self-managed
+
+  - name: Managed Cloud (Credential Fees)
+    description: >
+      Privado ID plans a managed cloud offering where verifiers pay per
+      credential use/reuse. Exact per-unit pricing had not been publicly
+      published at time of research (June 2026).
+    price: usage-based
+    currency: USD
+    period: per-transaction
+    features:
+      - Hosted issuer infrastructure
+      - Credential issuance and revocation
+      - Identity Cloud Wallet onboarding fee per user
+      - Trust registry access
+    rate_limits: cloud-managed
+    notes: Pricing details pending public announcement; contact sales for quotes.
+
+  - name: Enterprise
+    description: >
+      Custom SLA contracts for government and large-scale private deployments
+      requiring private infrastructure, dedicated support, and tailored development.
+    price: custom
+    currency: USD
+    period: contract
+    features:
+      - Private infrastructure deployment
+      - Custom SLAs
+      - Dedicated engineering support
+      - On-chain issuance and revocation
+      - Trust registry integration
+    contact: https://www.privado.id/

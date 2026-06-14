@@ -1,0 +1,30 @@
+name: Polygon ID (Privado ID) Rate Limits
+description: >
+  Polygon ID's Issuer Node is self-hosted open-source software (Go).
+  There are no platform-enforced rate limits imposed by the vendor on
+  self-hosted deployments; operators configure their own infrastructure
+  capacity. The public testing endpoint (issuer-node-core-api-testing.privado.id)
+  is provided for evaluation only and carries unspecified usage restrictions.
+url: https://docs.privado.id/docs/issuer-node/issuer-node-api/introduction/
+self_hosted:
+  enforced_by_vendor: false
+  notes: >
+    Operators must implement their own rate limiting (e.g., reverse proxy,
+    API gateway) when deploying the issuer node in production.
+testing_endpoint:
+  url: https://issuer-node-core-api-testing.privado.id/
+  purpose: Evaluation / demonstration only
+  limits: unspecified; not for production use
+blockchain_constraints:
+  description: >
+    On-chain operations (publishing identity state, on-chain verification)
+    are constrained by the underlying blockchain network (Polygon PoS /
+    Amoy testnet / zkEVM) transaction throughput and gas availability.
+  networks:
+    - name: Polygon PoS Mainnet
+      chain_id: 137
+    - name: Polygon Amoy Testnet
+      chain_id: 80002
+    - name: Polygon zkEVM
+      chain_id: 1101
+authentication: HTTP Basic Auth (username / password) for all protected endpoints
