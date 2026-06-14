@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "required": [
+    "identifier",
+    "state",
+    "status",
+    "keyType",
+    "credentialStatusType",
+    "authCredentialsIDs"
+  ],
+  "properties": {
+    "identifier": {
+      "type": "string"
+    },
+    "displayName": {
+      "x-omitempty": false,
+      "type": "string"
+    },
+    "state": {
+      "$ref": "#/components/schemas/IdentityState"
+    },
+    "address": {
+      "type": "string",
+      "x-omitempty": true
+    },
+    "balance": {
+      "type": "string",
+      "x-omitempty": true
+    },
+    "keyType": {
+      "type": "string"
+    },
+    "credentialStatusType": {
+      "type": "string",
+      "example": "Iden3ReverseSparseMerkleTreeProof",
+      "enum": [
+        "Iden3commRevocationStatusV1.0",
+        "Iden3ReverseSparseMerkleTreeProof",
+        "Iden3OnchainSparseMerkleTreeProof2023"
+      ]
+    },
+    "authCredentialsIDs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GetIdentityDetailsResponse"
+}

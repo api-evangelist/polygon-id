@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": [
+    "keyType",
+    "name"
+  ],
+  "properties": {
+    "keyType": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "babyjubJub",
+      "enum": [
+        "babyjubJub",
+        "secp256k1",
+        "ed25519"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "example": "my key"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreateKeyRequest"
+}

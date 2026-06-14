@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "required": [
+    "displayName",
+    "logo"
+  ],
+  "properties": {
+    "displayName": {
+      "type": "string",
+      "example": "my issuer"
+    },
+    "logo": {
+      "type": "string",
+      "example": "http://my-public-logo/logo.jpg"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IssuerDescription"
+}

@@ -1,0 +1,39 @@
+{
+  "chainID": "80002",
+  "scope": [
+    {
+      "circuitID": "credentialAtomicQueryV3-beta.1",
+      "id": 1,
+      "query": {
+        "groupId": 1,
+        "context": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld",
+        "allowedIssuers": [
+          "*"
+        ],
+        "type": "KYCAgeCredential",
+        "credentialSubject": {
+          "birthday": {
+            "$lt": 20201010
+          }
+        }
+      }
+    },
+    {
+      "circuitID": "linkedMultiQuery10-beta.1",
+      "id": 2,
+      "query": {
+        "groupId": 1,
+        "context": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld",
+        "allowedIssuers": [
+          "*"
+        ],
+        "type": "KYCAgeCredential",
+        "credentialSubject": {
+          "documentType": {
+            "$lt": 10
+          }
+        }
+      }
+    }
+  ]
+}

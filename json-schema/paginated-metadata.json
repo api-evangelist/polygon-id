@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "required": [
+    "total",
+    "page",
+    "max_results"
+  ],
+  "properties": {
+    "total": {
+      "type": "integer",
+      "format": "uint",
+      "example": 1
+    },
+    "page": {
+      "type": "integer",
+      "format": "uint",
+      "example": 1
+    },
+    "max_results": {
+      "type": "integer",
+      "format": "uint",
+      "example": 50
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaginatedMetadata"
+}

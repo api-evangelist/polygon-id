@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "txHash": {
+      "type": "string",
+      "example": "0x8f271174b45ba7892d83...",
+      "description": "If txHash not provided then only verification on the Payment contract will be performed by nonce and issuer DID."
+    },
+    "userDID": {
+      "type": "string",
+      "example": "did:iden3:polygon:amoy:2qVSDLNYs2s5HDMTyb4Su67ZvrZ...",
+      "description": "If a User DID is provided, the payment will be verified for the specified User DID."
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaymentVerifyRequest"
+}

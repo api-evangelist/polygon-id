@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "required": [
+    "items",
+    "meta"
+  ],
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DisplayMethodEntity"
+      }
+    },
+    "meta": {
+      "$ref": "#/components/schemas/PaginatedMetadata"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DisplayMethodPaginated"
+}

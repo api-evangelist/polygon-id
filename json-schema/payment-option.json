@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "issuerDID",
+    "name",
+    "description",
+    "paymentOptions",
+    "modifiedAt",
+    "createdAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-go-type": "uuid.UUID",
+      "x-go-type-import": {
+        "name": "uuid",
+        "path": "github.com/google/uuid"
+      }
+    },
+    "issuerDID": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "paymentOptions": {
+      "$ref": "#/components/schemas/PaymentOptionConfig"
+    },
+    "modifiedAt": {
+      "$ref": "#/components/schemas/TimeUTC"
+    },
+    "createdAt": {
+      "$ref": "#/components/schemas/TimeUTC"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaymentOption"
+}

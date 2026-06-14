@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": [
+    "scopeID",
+    "nullifier",
+    "nullifierSessionID"
+  ],
+  "properties": {
+    "scopeID": {
+      "type": "integer",
+      "format": "uint32",
+      "example": 1
+    },
+    "nullifierSessionID": {
+      "type": "string",
+      "example": "123443290439234342342423423423423"
+    },
+    "nullifier": {
+      "type": "string",
+      "example": "1234"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "JWZProofs"
+}

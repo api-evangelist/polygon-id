@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "required": [
+    "items",
+    "meta"
+  ],
+  "properties": {
+    "items": {
+      "$ref": "#/components/schemas/PaymentOptions"
+    },
+    "meta": {
+      "$ref": "#/components/schemas/PaginatedMetadata"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaymentOptionsPaginated"
+}

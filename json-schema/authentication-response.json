@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "required": [
+    "message",
+    "sessionID"
+  ],
+  "properties": {
+    "message": {
+      "type": "string",
+      "example": "iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4"
+    },
+    "sessionID": {
+      "$ref": "#/components/schemas/UUIDString"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuthenticationResponse"
+}

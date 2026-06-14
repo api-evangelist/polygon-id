@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "required": [
+    "id"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "c79c9c04-8c98-40f2-a7a0-5eeabf08d836"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UUIDResponse"
+}

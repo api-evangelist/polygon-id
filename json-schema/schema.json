@@ -1,0 +1,69 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "hash",
+    "bigInt",
+    "url",
+    "type",
+    "contextURL",
+    "createdAt",
+    "version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "c79c9c04-8c98-40f2-a7a0-5eeabf08d836"
+    },
+    "hash": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "18f30714a35a5db88ca24728c0c53dfd"
+    },
+    "bigInt": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "336615423900919464193075592850483704600"
+    },
+    "url": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json"
+    },
+    "type": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "KYCCountryOfResidenceCredential"
+    },
+    "contextURL": {
+      "type": "string"
+    },
+    "createdAt": {
+      "$ref": "#/components/schemas/TimeUTC",
+      "x-omitempty": false
+    },
+    "title": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "KYC Age Credential"
+    },
+    "description": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "KYC Age Credential description"
+    },
+    "version": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "1.0.0"
+    },
+    "displayMethodID": {
+      "type": "string",
+      "x-go-type": "uuid.UUID",
+      "x-omitempty": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema"
+}

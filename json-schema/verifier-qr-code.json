@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "typ",
+    "type",
+    "thid",
+    "body",
+    "from"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "6dc645a6-2be3-4099-a645-20784ee53cd0"
+    },
+    "typ": {
+      "type": "string",
+      "example": "application/iden3comm-plain-json"
+    },
+    "type": {
+      "type": "string",
+      "example": "https://iden3-communication.io/authorization/1.0/request"
+    },
+    "thid": {
+      "type": "string",
+      "example": "6dc645a6-2be3-4099-a645-20784ee53cd0"
+    },
+    "body": {
+      "$ref": "#/components/schemas/Body"
+    },
+    "from": {
+      "type": "string",
+      "example": "did:polygonid:polygon:amoy:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT"
+    },
+    "to": {
+      "type": "string",
+      "example": "did:polygonid:polygon:amoy:2qEATqfECVbCBzq9EhJpPSiv1xtJRpbMBKDaNM68Ci"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QRCode"
+}

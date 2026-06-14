@@ -1,0 +1,6 @@
+{
+  "$ref": "#/components/schemas/QRCode",
+  "example": " { \"id\":\"6dc645a6-2be3-4099-a645-20784ee53cd0\", \"typ\":\"application/iden3comm-plain-json\", \"type\":\"https://iden3-communication.io/authorization/1.0/request\", \"thid\":\"6dc645a6-2be3-4099-a645-20784ee53cd0\", \"body\":{ \"callbackUrl\":\"https://verifier-backend/callback?sessionId=6dc645a6-2be3-4099-a645-20784ee53cd0\", \"reason\":\"test flow\", \"scope\":[ { \"id\":1, \"circuitId\":\"credentialAtomicQuerySigV2\", \"query\":{ \"allowedIssuers\":[ \"*\" ], \"context\":\"https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v4.jsonld\", \"credentialSubject\":{ \"birthday\":{ \"$lt\":20000101 } }, \"skipClaimRevocationCheck\":true, \"type\":\"KYCAgeCredential\" } } ] }, \"from\":\"did:polygonid:polygon:amoy:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT\" } ",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QRStoreRequest"
+}

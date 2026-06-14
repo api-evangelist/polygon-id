@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "userID",
+    "issuerID",
+    "createdAt",
+    "credentials"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "7fff8112-c415-11ed-b036-debe37e1cbd6"
+    },
+    "userID": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "did:polygonid:polygon:amoy:2qMZrfBsXuGFTwSqkqYki78zF3pe1vtXoqH4yRLsfs"
+    },
+    "issuerID": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "did:polygonid:polygon:amoy:2qFpPHotk6oyaX1fcrpQFT4BMnmg8YszUwxYtaoGoe"
+    },
+    "createdAt": {
+      "$ref": "#/components/schemas/TimeUTC"
+    },
+    "credentials": {
+      "type": "array",
+      "x-omitempty": false,
+      "items": {
+        "$ref": "#/components/schemas/Credential"
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GetConnectionResponse"
+}

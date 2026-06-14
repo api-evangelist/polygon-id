@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": [
+    "paymentOptionID",
+    "amount",
+    "recipient",
+    "signingKeyID"
+  ],
+  "properties": {
+    "paymentOptionID": {
+      "type": "integer"
+    },
+    "amount": {
+      "type": "string"
+    },
+    "recipient": {
+      "type": "string"
+    },
+    "signingKeyID": {
+      "type": "string",
+      "description": "base64 encoded keyID"
+    },
+    "expiration": {
+      "type": "string",
+      "format": "date-time",
+      "example": "2025-04-17T11:40:43.681857-03:00",
+      "x-omitempty": true,
+      "description": "Expiration date for the payment option, if not set the 1 hour from the creation date will be used"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaymentOptionConfigItem"
+}

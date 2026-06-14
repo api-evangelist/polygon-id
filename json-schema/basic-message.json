@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "required": [
+    "body",
+    "id",
+    "typ",
+    "type",
+    "thid",
+    "from",
+    "to"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "typ": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "thid": {
+      "type": "string"
+    },
+    "body": {
+      "type": null
+    },
+    "from": {
+      "type": "string"
+    },
+    "to": {
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BasicMessage"
+}

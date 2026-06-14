@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "x-go-type": "uuid.UUID",
+  "x-go-type-import": {
+    "name": "uuid",
+    "path": "github.com/google/uuid"
+  },
+  "example": "8edd8112-c415-11ed-b036-debe37e1cbd6",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UUID"
+}

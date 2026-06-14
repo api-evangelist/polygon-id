@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "required": [
+    "message"
+  ],
+  "properties": {
+    "message": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "pending"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RevokeClaimResponse"
+}

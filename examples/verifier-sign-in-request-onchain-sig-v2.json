@@ -1,0 +1,27 @@
+{
+  "chainID": "80002",
+  "scope": [
+    {
+      "circuitID": "credentialAtomicQuerySigV2OnChain",
+      "id": 1,
+      "query": {
+        "context": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld",
+        "allowedIssuers": [
+          "*"
+        ],
+        "type": "KYCAgeCredential",
+        "credentialSubject": {
+          "birthday": {
+            "$lt": 20020101
+          }
+        }
+      }
+    }
+  ],
+  "transactionData": {
+    "contractAddress": "0x2b23e5cF70D133fFaA7D8ba61E1bAC4637253880",
+    "methodID": "b68967e2",
+    "chainID": 80002,
+    "network": "polygon-amoy"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "x-omitempty": false,
+  "required": [
+    "blockchain",
+    "networks"
+  ],
+  "properties": {
+    "blockchain": {
+      "type": "string",
+      "example": "polygon"
+    },
+    "networks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/NetworkData"
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SupportedNetworks"
+}

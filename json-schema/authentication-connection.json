@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "userID",
+    "issuerID",
+    "createdAt",
+    "modifiedAt"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "#/components/schemas/UUIDString"
+    },
+    "userID": {
+      "$ref": "#/components/schemas/UUIDString"
+    },
+    "issuerID": {
+      "$ref": "#/components/schemas/UUIDString"
+    },
+    "createdAt": {
+      "$ref": "#/components/schemas/TimeUTC"
+    },
+    "modifiedAt": {
+      "$ref": "#/components/schemas/TimeUTC"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuthenticationConnection"
+}

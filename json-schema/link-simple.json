@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "schemaUrl",
+    "schemaType",
+    "proofTypes",
+    "schemaHash"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-go-type": "uuid.UUID",
+      "x-go-type-import": {
+        "name": "uuid",
+        "path": "github.com/google/uuid"
+      },
+      "example": "8edd8112-c415-11ed-b036-debe37e1cbd6"
+    },
+    "schemaUrl": {
+      "type": "string",
+      "example": "https://someValidURL.com"
+    },
+    "schemaType": {
+      "type": "string",
+      "example": "KYCAgeCredential"
+    },
+    "schemaHash": {
+      "type": "string",
+      "example": "c9b2370371b7fa8b3dab2a5ba81b6838"
+    },
+    "proofTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "BJJSignature2021"
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LinkSimple"
+}

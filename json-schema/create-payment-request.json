@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "required": [
+    "optionID",
+    "schemaID",
+    "description",
+    "userDID"
+  ],
+  "properties": {
+    "optionID": {
+      "type": "string",
+      "x-go-type": "uuid.UUID",
+      "x-go-type-import": {
+        "name": "uuid",
+        "path": "github.com/google/uuid"
+      }
+    },
+    "schemaID": {
+      "type": "string",
+      "x-go-type": "uuid.UUID",
+      "x-go-type-import": {
+        "name": "uuid",
+        "path": "github.com/google/uuid"
+      }
+    },
+    "description": {
+      "type": "string",
+      "example": "Payment for AML"
+    },
+    "userDID": {
+      "type": "string",
+      "example": "<user did>"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreatePaymentRequest"
+}

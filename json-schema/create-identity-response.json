@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "required": [
+    "identity",
+    "status",
+    "keyType",
+    "credentialStatusType"
+  ],
+  "properties": {
+    "identifier": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "state": {
+      "$ref": "#/components/schemas/IdentityState"
+    },
+    "address": {
+      "type": "string",
+      "x-omitempty": true
+    },
+    "balance": {
+      "type": "string",
+      "x-omitempty": true
+    },
+    "keyType": {
+      "type": "string"
+    },
+    "credentialStatusType": {
+      "type": "string",
+      "example": "Iden3ReverseSparseMerkleTreeProof",
+      "enum": [
+        "Iden3commRevocationStatusV1.0",
+        "Iden3ReverseSparseMerkleTreeProof",
+        "Iden3OnchainSparseMerkleTreeProof2023"
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreateIdentityResponse"
+}

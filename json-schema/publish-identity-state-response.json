@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "txID": {
+      "type": "string"
+    },
+    "claimsTreeRoot": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "revocationTreeRoot": {
+      "type": "string"
+    },
+    "rootOfRoots": {
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PublishIdentityStateResponse"
+}

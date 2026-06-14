@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "required": [
+    "url",
+    "schemaType",
+    "version"
+  ],
+  "properties": {
+    "url": {
+      "type": "string",
+      "example": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json"
+    },
+    "schemaType": {
+      "type": "string",
+      "example": "vaccinationCertificate"
+    },
+    "title": {
+      "type": "string",
+      "example": "KYC Age Credential"
+    },
+    "description": {
+      "type": "string",
+      "example": "KYC Age Credential description"
+    },
+    "version": {
+      "type": "string",
+      "example": "1.0.0"
+    },
+    "displayMethodID": {
+      "type": "string",
+      "x-go-type": "uuid.UUID",
+      "x-omitempty": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ImportSchemaRequest"
+}

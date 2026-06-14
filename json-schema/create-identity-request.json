@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "required": [
+    "didMetadata"
+  ],
+  "properties": {
+    "didMetadata": {
+      "type": "object",
+      "required": [
+        "method",
+        "blockchain",
+        "network",
+        "type"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "x-omitempty": false,
+          "example": "polygonid"
+        },
+        "blockchain": {
+          "type": "string",
+          "x-omitempty": false,
+          "example": "polygon"
+        },
+        "network": {
+          "type": "string",
+          "x-omitempty": false,
+          "example": "amoy"
+        },
+        "type": {
+          "type": "string",
+          "x-omitempty": false,
+          "example": "BJJ",
+          "enum": [
+            "BJJ",
+            "ETH"
+          ]
+        }
+      }
+    },
+    "credentialStatusType": {
+      "type": "string",
+      "x-omitempty": true,
+      "example": "Iden3ReverseSparseMerkleTreeProof",
+      "enum": [
+        "Iden3commRevocationStatusV1.0",
+        "Iden3ReverseSparseMerkleTreeProof",
+        "Iden3OnchainSparseMerkleTreeProof2023"
+      ]
+    },
+    "displayName": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "KYCAgeCredential Issuer identity"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreateIdentityRequest"
+}

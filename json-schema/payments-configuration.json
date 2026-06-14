@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "x-go-type": "payments.Config",
+  "x-go-type-import": {
+    "name": "payments",
+    "path": "github.com/polygonid/sh-id-platform/internal/payments"
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaymentsConfiguration"
+}

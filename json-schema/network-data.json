@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": [
+    "name",
+    "credentialStatus"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "amoy"
+    },
+    "credentialStatus": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "Iden3commRevocationStatusV1.0"
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NetworkData"
+}

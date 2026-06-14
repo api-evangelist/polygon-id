@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": [
+    "status",
+    "requestId"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed",
+        "pending",
+        "canceled"
+      ]
+    },
+    "requestId": {
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaymentStatus"
+}

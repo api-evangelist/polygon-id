@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "circuitId",
+    "query"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "format": "uint32",
+      "example": 1
+    },
+    "circuitId": {
+      "type": "string",
+      "example": "credentialAtomicQuerySigV2"
+    },
+    "query": {
+      "$ref": "#/components/schemas/Query"
+    },
+    "params": {
+      "$ref": "#/components/schemas/ScopeParams"
+    }
+  },
+  "example": {
+    "circuitID": "credentialAtomicQuerySigV2",
+    "id": 1,
+    "query": {
+      "context": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld",
+      "allowedIssuers": [
+        "*"
+      ],
+      "type": "KYCAgeCredential",
+      "credentialSubject": {
+        "birthday": {
+          "$eq": 19960424
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scope"
+}

@@ -1,0 +1,119 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "privado": "https://www.privado.id/vocab#",
+    "iden3": "https://iden3.io/vocab#",
+
+    "DID": {
+      "@id": "privado:DID",
+      "@type": "xsd:string",
+      "@comment": "Decentralized Identifier — the primary identifier for issuers, holders, and verifiers in the Polygon ID protocol."
+    },
+    "VerifiableCredential": {
+      "@id": "privado:VerifiableCredential",
+      "@comment": "A tamper-evident credential cryptographically signed by an issuer and optionally revealed via ZK proof."
+    },
+    "IdentityState": {
+      "@id": "privado:IdentityState",
+      "@comment": "On-chain commitment to the current state of an identity's credential and revocation Merkle trees."
+    },
+    "CredentialSchema": {
+      "@id": "privado:CredentialSchema",
+      "@comment": "JSON-LD schema defining the structure and semantics of a verifiable credential type."
+    },
+    "ZeroKnowledgeProof": {
+      "@id": "privado:ZeroKnowledgeProof",
+      "@comment": "Cryptographic proof of a claim predicate that reveals no underlying personal data."
+    },
+    "AuthorizationRequest": {
+      "@id": "privado:AuthorizationRequest",
+      "@comment": "A verifier-generated request asking a holder wallet to present a ZK proof."
+    },
+    "Connection": {
+      "@id": "privado:Connection",
+      "@comment": "Persistent issuer-holder relationship record created after a wallet authentication flow."
+    },
+    "CredentialLink": {
+      "@id": "privado:CredentialLink",
+      "@comment": "A shareable URL encoding a credential offer that a holder can redeem."
+    },
+    "PaymentRequest": {
+      "@id": "privado:PaymentRequest",
+      "@comment": "An iden3comm message extension requiring on-chain payment before credential issuance."
+    },
+    "RevocationStatus": {
+      "@id": "privado:RevocationStatus",
+      "@comment": "Endpoint or Merkle-tree path for checking credential revocation status."
+    },
+    "DisplayMethod": {
+      "@id": "privado:DisplayMethod",
+      "@comment": "Rendering template reference for wallet-side credential display."
+    },
+    "BJJKey": {
+      "@id": "privado:BJJKey",
+      "@comment": "Baby Jubjub elliptic-curve key used for ZK-SNARK compatible signing."
+    },
+    "ETHKey": {
+      "@id": "privado:ETHKey",
+      "@comment": "Standard Ethereum secp256k1 key used for on-chain transactions."
+    },
+    "JWZToken": {
+      "@id": "privado:JWZToken",
+      "@comment": "JSON Web Zero-Knowledge token carrying a ZK proof for authentication."
+    },
+    "MerkleTreeProof": {
+      "@id": "iden3:MerkleTreeProof",
+      "@comment": "Proof of inclusion or exclusion in a Sparse Merkle Tree."
+    },
+    "issuerDID": {
+      "@id": "privado:issuerDID",
+      "@type": "@id",
+      "@comment": "The DID of the credential issuer."
+    },
+    "holderDID": {
+      "@id": "privado:holderDID",
+      "@type": "@id",
+      "@comment": "The DID of the credential holder / subject."
+    },
+    "credentialId": {
+      "@id": "privado:credentialId",
+      "@type": "xsd:string"
+    },
+    "credentialStatus": {
+      "@id": "privado:credentialStatus",
+      "@comment": "Current revocation status of the credential."
+    },
+    "expirationDate": {
+      "@id": "schema:expires",
+      "@type": "xsd:dateTime"
+    },
+    "issuanceDate": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "schemaURL": {
+      "@id": "privado:schemaURL",
+      "@type": "@id"
+    },
+    "stateHash": {
+      "@id": "privado:stateHash",
+      "@type": "xsd:string"
+    },
+    "txID": {
+      "@id": "privado:txID",
+      "@type": "xsd:string",
+      "@comment": "On-chain transaction ID for an identity state transition."
+    },
+    "blockNumber": {
+      "@id": "privado:blockNumber",
+      "@type": "xsd:integer"
+    },
+    "network": {
+      "@id": "privado:network",
+      "@type": "xsd:string",
+      "@comment": "Blockchain network identifier, e.g. polygon:main or polygon:amoy."
+    }
+  }
+}

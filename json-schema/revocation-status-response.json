@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "required": [
+    "issuer",
+    "mtp"
+  ],
+  "properties": {
+    "issuer": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string"
+        },
+        "rootOfRoots": {
+          "type": "string"
+        },
+        "claimsTreeRoot": {
+          "type": "string"
+        },
+        "revocationTreeRoot": {
+          "type": "string"
+        }
+      }
+    },
+    "mtp": {
+      "type": "object",
+      "required": [
+        "existence"
+      ],
+      "properties": {
+        "existence": {
+          "type": "boolean"
+        },
+        "siblings": {
+          "type": "array",
+          "x-omitempty": false,
+          "items": {
+            "type": "string"
+          }
+        },
+        "node_aux": {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RevocationStatusResponse"
+}

@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "required": [
+    "proofType",
+    "schemaContext",
+    "schemaType",
+    "credentialSubject"
+  ],
+  "properties": {
+    "proofType": {
+      "type": "string",
+      "example": "VerifiablePresentation"
+    },
+    "schemaContext": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "https://www.w3.org/2018/credentials/v1"
+      }
+    },
+    "schemaType": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "KYCAgeCredential"
+      }
+    },
+    "credentialSubject": {
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VerifiablePresentation"
+}

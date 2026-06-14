@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "keyType",
+    "publicKey",
+    "isAuthCredential",
+    "name"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "ZGlkOnBvbHlnb25pZDpwb2x5Z29uOmFtb3k6MnFRNjhKa1JjZjN5cXBYanRqVVQ3WjdVeW1TV0hzYll",
+      "description": "base64 encoded keyID"
+    },
+    "keyType": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "babyjubJub",
+      "enum": [
+        "babyjubJub",
+        "secp256k1",
+        "ed25519"
+      ]
+    },
+    "publicKey": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "0x04e3e7e"
+    },
+    "isAuthCredential": {
+      "type": "boolean",
+      "x-omitempty": false,
+      "example": true
+    },
+    "name": {
+      "type": "string",
+      "x-omitempty": false,
+      "example": "my key"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Key"
+}

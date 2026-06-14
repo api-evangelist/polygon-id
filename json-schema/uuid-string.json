@@ -1,0 +1,7 @@
+{
+  "type": "string",
+  "x-omitempty": false,
+  "example": "b7144f1c-d54e-4f67-a4f1-f2e7ff1beb07",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UUIDString"
+}

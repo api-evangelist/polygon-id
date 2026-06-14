@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "required": [
+    "scope"
+  ],
+  "properties": {
+    "chainID": {
+      "type": "string",
+      "description": "Only required when using off-chain verification\n`80002`: `amoy`\n`80001`: `mumbai`\n`137` : `mainnet`\n",
+      "example": "80002"
+    },
+    "reason": {
+      "type": "string",
+      "example": "test flow"
+    },
+    "to": {
+      "type": "string",
+      "example": null
+    },
+    "from": {
+      "type": "string",
+      "example": null
+    },
+    "scope": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ScopeRequest"
+      }
+    },
+    "transactionData": {
+      "$ref": "#/components/schemas/TransactionData"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SignInRequest"
+}

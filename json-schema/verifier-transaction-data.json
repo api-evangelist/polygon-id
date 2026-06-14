@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "description": "Only required when using on-chain verification\n",
+  "required": [
+    "contractAddress",
+    "methodID",
+    "chainID",
+    "network"
+  ],
+  "properties": {
+    "contractAddress": {
+      "type": "string",
+      "example": "0x2b23e5cF70D133fFaA7D8ba61E1bAC4637253880 "
+    },
+    "methodID": {
+      "type": "string",
+      "example": "b68967e2"
+    },
+    "chainID": {
+      "type": "integer",
+      "example": 80002
+    },
+    "network": {
+      "type": "string",
+      "example": "polygon-amoy"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TransactionData"
+}

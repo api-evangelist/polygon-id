@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "required": [
+    "schemaID",
+    "signatureProof",
+    "mtProof",
+    "credentialSubject"
+  ],
+  "properties": {
+    "schemaID": {
+      "type": "string",
+      "x-go-type": "uuid.UUID",
+      "x-omitempty": false
+    },
+    "credentialExpiration": {
+      "type": "string",
+      "format": "date-time",
+      "example": "2025-04-17T11:40:43.681857-03:00"
+    },
+    "expiration": {
+      "type": "string",
+      "format": "date-time",
+      "example": "2025-04-17T11:40:43.681857-03:00"
+    },
+    "limitedClaims": {
+      "type": "integer",
+      "example": 5,
+      "x-omitempty": false
+    },
+    "signatureProof": {
+      "type": "boolean",
+      "example": true
+    },
+    "mtProof": {
+      "type": "boolean",
+      "example": false
+    },
+    "credentialSubject": {
+      "$ref": "#/components/schemas/CredentialSubject"
+    },
+    "refreshService": {
+      "$ref": "#/components/schemas/RefreshService"
+    },
+    "displayMethod": {
+      "$ref": "#/components/schemas/DisplayMethod"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreateLinkRequest"
+}

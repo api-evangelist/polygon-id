@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "data",
+    "proof",
+    "context",
+    "type",
+    "issuanceDate",
+    "credentialStatus"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-omitempty": false
+    },
+    "data": {
+      "type": "object",
+      "x-go-type": "protocol.JWEJSONEncryption",
+      "x-go-type-import": {
+        "name": "protocol",
+        "path": "github.com/iden3/iden3comm/v2/protocol"
+      }
+    },
+    "proof": {
+      "type": "object",
+      "x-go-type": "verifiable.CredentialProofs",
+      "x-go-type-import": {
+        "name": "verifiable",
+        "path": "github.com/iden3/go-schema-processor/v2/verifiable"
+      }
+    },
+    "context": {
+      "type": "string",
+      "example": "https://www.w3.org/2018/credentials/examples/v1"
+    },
+    "type": {
+      "type": "string",
+      "example": "KYCAgeCredential"
+    },
+    "expirationDate": {
+      "$ref": "#/components/schemas/TimeUTC"
+    },
+    "issuanceDate": {
+      "$ref": "#/components/schemas/TimeUTC"
+    },
+    "credentialStatus": {
+      "type": "object",
+      "x-go-type": "verifiable.CredentialStatus",
+      "x-go-type-import": {
+        "name": "verifiable",
+        "path": "github.com/iden3/go-schema-processor/v2/verifiable"
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EncryptedVC"
+}

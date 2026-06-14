@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "example": {
+    "context": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld",
+    "allowedIssuers": [
+      "*"
+    ],
+    "type": "KYCAgeCredential",
+    "credentialSubject": {
+      "birthday": {
+        "$lt": 20200424
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Query"
+}

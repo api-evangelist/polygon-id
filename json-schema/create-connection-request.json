@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "required": [
+    "userDID",
+    "userDoc",
+    "issuerDoc"
+  ],
+  "properties": {
+    "userDID": {
+      "type": "string",
+      "example": "did:polygonid:polygon:amoy:2qMZrfBsXuGFTwSqkqYki78zF3pe1vtXoqH4yRLsfs"
+    },
+    "userDoc": {
+      "type": "object",
+      "format": "byte"
+    },
+    "issuerDoc": {
+      "type": "object",
+      "format": "byte"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreateConnectionRequest"
+}

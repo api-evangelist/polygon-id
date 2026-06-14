@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": [
+    "userDID",
+    "verifiablePresentations"
+  ],
+  "properties": {
+    "userDID": {
+      "type": "string",
+      "example": "did:polygonid:polygon:amoy:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT"
+    },
+    "nullifiers": {
+      "type": "array",
+      "x-omitempty": false,
+      "items": {
+        "$ref": "#/components/schemas/JWZProofs"
+      }
+    },
+    "verifiablePresentations": {
+      "$ref": "#/components/schemas/VerifiablePresentations"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "JWZMetadata"
+}

@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "required": [
+    "stateID",
+    "identifier",
+    "status",
+    "modifiedAt",
+    "createdAt"
+  ],
+  "properties": {
+    "stateID": {
+      "type": "integer",
+      "format": "int64",
+      "x-go-json-ignore": true
+    },
+    "identifier": {
+      "type": "string",
+      "x-go-json-ignore": true
+    },
+    "state": {
+      "type": "string"
+    },
+    "rootOfRoots": {
+      "type": "string"
+    },
+    "claimsTreeRoot": {
+      "type": "string"
+    },
+    "revocationTreeRoot": {
+      "type": "string"
+    },
+    "blockTimestamp": {
+      "type": "integer"
+    },
+    "blockNumber": {
+      "type": "integer"
+    },
+    "txID": {
+      "type": "string"
+    },
+    "previousState": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "modifiedAt": {
+      "$ref": "#/components/schemas/TimeUTC"
+    },
+    "createdAt": {
+      "$ref": "#/components/schemas/TimeUTC"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IdentityState"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "x-go-type": "protocol.CredentialsOfferMessage",
+  "x-go-type-import": {
+    "name": "protocol",
+    "path": "github.com/iden3/iden3comm/v2/protocol"
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Offer"
+}

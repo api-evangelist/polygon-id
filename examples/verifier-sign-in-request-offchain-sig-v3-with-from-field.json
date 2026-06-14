@@ -1,0 +1,21 @@
+{
+  "from": "did:iden3:polygon:amoy:x6x5sor7zpyKA2dWUDvNRz7nzd6oCx5w43BNJbgaL",
+  "scope": [
+    {
+      "circuitID": "credentialAtomicQueryV3-beta.1",
+      "id": 1,
+      "query": {
+        "context": "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld",
+        "allowedIssuers": [
+          "*"
+        ],
+        "type": "KYCAgeCredential",
+        "credentialSubject": {
+          "birthday": {
+            "$lt": 20201010
+          }
+        }
+      }
+    }
+  ]
+}

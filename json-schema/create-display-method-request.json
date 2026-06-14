@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "required": [
+    "name",
+    "url"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "My Display Method"
+    },
+    "url": {
+      "type": "string",
+      "example": "https://my-display-method.com"
+    },
+    "type": {
+      "type": "string",
+      "example": "Iden3BasicDisplayMethodV1",
+      "description": "Display method type (Iden3BasicDisplayMethodV1 is default value)"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreateDisplayMethodRequest"
+}

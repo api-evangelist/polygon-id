@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "required": [
+    "reason",
+    "scope"
+  ],
+  "properties": {
+    "transaction_data": {
+      "$ref": "#/components/schemas/TransactionDataResponse"
+    },
+    "callbackUrl": {
+      "type": "string",
+      "example": "https://verifier-backend/callback?sessionId=6dc645a6-2be3-4099-a645-20784ee53cd0"
+    },
+    "reason": {
+      "type": "string",
+      "example": "test flow"
+    },
+    "scope": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Scope"
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Body"
+}

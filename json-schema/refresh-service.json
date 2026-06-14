@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "type"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-omitempty": false
+    },
+    "type": {
+      "type": "string",
+      "x-omitempty": false,
+      "enum": [
+        "Iden3RefreshService2023"
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RefreshService"
+}

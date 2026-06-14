@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "issuerDID",
+    "userDID",
+    "paymentOptionID",
+    "payments",
+    "createdAt",
+    "modifiedAt",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "issuerDID": {
+      "type": "string"
+    },
+    "userDID": {
+      "type": "string"
+    },
+    "paymentOptionID": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "payments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/PaymentRequestInfo"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "not-verified",
+        "success",
+        "failed",
+        "pending",
+        "canceled"
+      ]
+    },
+    "paidNonce": {
+      "type": "string"
+    },
+    "schemaID": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreatePaymentRequestResponse"
+}

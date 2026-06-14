@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "required": [
+    "connection"
+  ],
+  "properties": {
+    "connection": {
+      "$ref": "#/components/schemas/AuthenticationConnection"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GetAuthenticationConnectionResponse"
+}
