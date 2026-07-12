@@ -156,6 +156,10 @@ apis:
         url: https://github.com/0xPolygonID
 
 common:
+  - type: DomainSecurity
+    url: security/polygon-id-domain-security.yml
+  - type: Authentication
+    url: authentication/polygon-id-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/0xPolygonID
   - type: Documentation

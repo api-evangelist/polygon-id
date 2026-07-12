@@ -1,0 +1,12 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/issuer-node-api.yaml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/issuer-node-api.yaml
