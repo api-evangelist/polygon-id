@@ -156,6 +156,8 @@ apis:
         url: https://github.com/0xPolygonID
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/polygon-id-agentic-access.yml
   - type: DomainSecurity
     url: security/polygon-id-domain-security.yml
   - type: Authentication
