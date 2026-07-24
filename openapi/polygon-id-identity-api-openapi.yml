@@ -1,0 +1,744 @@
+openapi: 3.0.0
+info:
+  title: Privado ID - Issuer Agent Identity API
+  description: "The Issuer Node Core API is ideal for users who need multiple identities and for integrator profiles, who want to \ncreate solutions based on Privado ID functionalities and might be interested in having access to low level \ninformation such as Merkle Trees.\nThe Issuer Node API provide the following functionalities:\n* Create and retrieve Identities\n* Create a Verifiable Credential (VC)\n* Retrieve a Verifiable Credential or a list of Verifiable Credentials\n* Generate JSON to create a QR Code and use that to accept credentials in a wallet\n* Revoke a Verifiable Credential\n* Check revocation status of a Verifiable Credential\n* Retrieve the Revocation Status of a Verifiable Credential\n* Call Agent Endpoint using the Wallet App\n* Handle connections.\n"
+  version: '1'
+tags:
+- name: Identity
+  description: Collection of endpoints related to Identity
+paths:
+  /v2/identities:
+    post:
+      summary: Create Identity
+      operationId: CreateIdentity
+      description: "Endpoint to create an identity to issue credentials.\nIssuer node supports two types of keys (field `type`):\n* BJJ Keys\n* ETH Keys\n\n`credentialStatusType` field is optional and and defines how the auth core claim will be evaluated during \nthe process to verify that it has not been revoked.\n"
+      tags:
+      - Identity
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIdentityRequest'
+      responses:
+        '201':
+          description: Identity created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateIdentityResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+    get:
+      summary: Get Identities
+      operationId: GetIdentities
+      description: Endpoint to get all the identities
+      tags:
+      - Identity
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: all good
+          content:
+            application/json:
+              schema:
+                type: array
+                x-omitempty: false
+                items:
+                  $ref: '#/components/schemas/GetIdentitiesResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}:
+    patch:
+      summary: Update Identity
+      operationId: UpdateIdentity
+      description: 'Endpoint to update the identity.
+
+        The displayName field is used to identify the identity in the UI.
+
+        '
+      tags:
+      - Identity
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - displayName
+              properties:
+                displayName:
+                  type: string
+                  example: KYCAgeCredential Issuer identity
+      responses:
+        '200':
+          description: Identity updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessage'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500-CreateIdentity'
+    get:
+      summary: Get Identity Detail
+      operationId: GetIdentityDetails
+      description: Endpoint to get an identity details
+      tags:
+      - Identity
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      responses:
+        '200':
+          description: Identity top up successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIdentityDetailsResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/state/retry:
+    post:
+      summary: Retry Publish Identity State
+      operationId: RetryPublishState
+      description: Endpoint to retry publish identity state. If the publish state failed, this endpoint can be used to retry the publish.
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      tags:
+      - Identity
+      responses:
+        '202':
+          description: Publish state successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishIdentityStateResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/state/publish:
+    post:
+      summary: Publish Identity State
+      operationId: PublishIdentityState
+      description: Endpoint to publish identity state.
+      tags:
+      - Identity
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      responses:
+        '200':
+          description: No transactions to process to the given identity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessage'
+        '202':
+          description: Transaction ID of the published  state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishIdentityStateResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/state/transactions:
+    get:
+      summary: Get Identity State Transactions
+      operationId: GetStateTransactions
+      description: 'Endpoint to get identity state transactions.
+
+        To get all transactions, use the filter `all`. To get the latest transaction, use the filter `latest`.
+
+        The transactions are paginated for `filter=all`. If the filter is not provided, the default is `all`.
+
+        '
+      security:
+      - basicAuth: []
+      tags:
+      - Identity
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      - in: query
+        name: filter
+        schema:
+          type: string
+          enum:
+          - all
+          - latest
+          default: all
+      - in: query
+        name: page
+        schema:
+          type: integer
+          format: uint
+          minimum: 1
+          example: 5
+        description: Page to fetch. First is 1. If not provided, default is 1.
+      - in: query
+        name: max_results
+        schema:
+          type: integer
+          format: uint
+          example: 10
+          default: 50
+        description: Number of items to fetch on each page. Default is 10.
+      - in: query
+        name: sort
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publishDate
+            - -publishDate
+            - status
+            - -status
+            default: -publishDate
+          description: 'The minus sign (-) before createdAt means descending order.
+
+            '
+      responses:
+        '200':
+          description: State transactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StateTransactionsPaginated'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/state/status:
+    get:
+      summary: Get Identity State Status
+      operationId: GetStateStatus
+      description: 'Endpoint to get identity state status, if the identity status is published or not.
+
+        If the status is `pendingActions` is true it means that the identity has pending actions to be published.
+
+        '
+      security:
+      - basicAuth: []
+      tags:
+      - Identity
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      responses:
+        '200':
+          description: State status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StateStatusResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/create-auth-credential:
+    post:
+      summary: Create Auth Credential
+      operationId: CreateAuthCredential
+      description: 'Endpoint to create a new Auth Credential
+
+        * keyID - only babyjubjub keys supported
+
+        '
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier2'
+      tags:
+      - Identity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAuthCredentialRequest'
+      responses:
+        '201':
+          description: Key added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - id
+                - credentialStatusType
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the created Auth Credential
+                    x-go-type: uuid.UUID
+                    x-go-type-import:
+                      name: uuid
+                      path: github.com/google/uuid
+                    example: 8edd8112-c415-11ed-b036-debe37e1cbd6
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/keys/{id}:
+    delete:
+      summary: Delete Key
+      operationId: DeleteKey
+      description: Remove a specific key for the provided identity.
+      tags:
+      - Identity
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier2'
+      - $ref: '#/components/parameters/pathKeyID'
+      responses:
+        '200':
+          description: Key deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessage'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  responses:
+    500-CreateIdentity:
+      description: Internal Server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              requestID:
+                type: string
+              code:
+                type: integer
+              error:
+                type: string
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '409':
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '403':
+      description: Permission Denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+  schemas:
+    PublishIdentityStateResponse:
+      type: object
+      properties:
+        txID:
+          type: string
+        claimsTreeRoot:
+          type: string
+        state:
+          type: string
+        revocationTreeRoot:
+          type: string
+        rootOfRoots:
+          type: string
+    CreateIdentityRequest:
+      type: object
+      required:
+      - didMetadata
+      properties:
+        didMetadata:
+          type: object
+          required:
+          - method
+          - blockchain
+          - network
+          - type
+          properties:
+            method:
+              type: string
+              x-omitempty: false
+              example: polygonid
+            blockchain:
+              type: string
+              x-omitempty: false
+              example: polygon
+            network:
+              type: string
+              x-omitempty: false
+              example: amoy
+            type:
+              type: string
+              x-omitempty: false
+              example: BJJ
+              enum:
+              - BJJ
+              - ETH
+        credentialStatusType:
+          type: string
+          x-omitempty: true
+          example: Iden3ReverseSparseMerkleTreeProof
+          enum:
+          - Iden3commRevocationStatusV1.0
+          - Iden3ReverseSparseMerkleTreeProof
+          - Iden3OnchainSparseMerkleTreeProof2023
+        displayName:
+          type: string
+          x-omitempty: false
+          example: KYCAgeCredential Issuer identity
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    StateTransactions:
+      type: array
+      items:
+        $ref: '#/components/schemas/StateTransaction'
+    StateStatusResponse:
+      type: object
+      required:
+      - pendingActions
+      properties:
+        pendingActions:
+          type: boolean
+          example: true
+    IdentityState:
+      type: object
+      required:
+      - stateID
+      - identifier
+      - status
+      - modifiedAt
+      - createdAt
+      properties:
+        stateID:
+          type: integer
+          format: int64
+          x-go-json-ignore: true
+        identifier:
+          type: string
+          x-go-json-ignore: true
+        state:
+          type: string
+        rootOfRoots:
+          type: string
+        claimsTreeRoot:
+          type: string
+        revocationTreeRoot:
+          type: string
+        blockTimestamp:
+          type: integer
+        blockNumber:
+          type: integer
+        txID:
+          type: string
+        previousState:
+          type: string
+        status:
+          type: string
+        modifiedAt:
+          $ref: '#/components/schemas/TimeUTC'
+        createdAt:
+          $ref: '#/components/schemas/TimeUTC'
+    CreateIdentityResponse:
+      type: object
+      required:
+      - identity
+      - status
+      - keyType
+      - credentialStatusType
+      properties:
+        identifier:
+          type: string
+        displayName:
+          type: string
+        state:
+          $ref: '#/components/schemas/IdentityState'
+        address:
+          type: string
+          x-omitempty: true
+        balance:
+          type: string
+          x-omitempty: true
+        keyType:
+          type: string
+        credentialStatusType:
+          type: string
+          example: Iden3ReverseSparseMerkleTreeProof
+          enum:
+          - Iden3commRevocationStatusV1.0
+          - Iden3ReverseSparseMerkleTreeProof
+          - Iden3OnchainSparseMerkleTreeProof2023
+    GetIdentityDetailsResponse:
+      type: object
+      required:
+      - identifier
+      - state
+      - status
+      - keyType
+      - credentialStatusType
+      - authCredentialsIDs
+      properties:
+        identifier:
+          type: string
+        displayName:
+          x-omitempty: false
+          type: string
+        state:
+          $ref: '#/components/schemas/IdentityState'
+        address:
+          type: string
+          x-omitempty: true
+        balance:
+          type: string
+          x-omitempty: true
+        keyType:
+          type: string
+        credentialStatusType:
+          type: string
+          example: Iden3ReverseSparseMerkleTreeProof
+          enum:
+          - Iden3commRevocationStatusV1.0
+          - Iden3ReverseSparseMerkleTreeProof
+          - Iden3OnchainSparseMerkleTreeProof2023
+        authCredentialsIDs:
+          type: array
+          items:
+            type: string
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    PaginatedMetadata:
+      type: object
+      required:
+      - total
+      - page
+      - max_results
+      properties:
+        total:
+          type: integer
+          format: uint
+          example: 1
+        page:
+          type: integer
+          format: uint
+          example: 1
+        max_results:
+          type: integer
+          format: uint
+          example: 50
+    CreateAuthCredentialRequest:
+      type: object
+      required:
+      - keyID
+      - credentialStatusType
+      properties:
+        keyID:
+          type: string
+          x-omitempty: false
+          example: ZGlkOnBvbHlnb25pZDpwb2x5Z29uOmFtb3k6MnFRNjhKa1JjZjN5cXBYanRqVVQ3WjdVeW1TV0hzYll
+        expiration:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: uint32
+        revNonce:
+          type: integer
+          format: uint64
+        credentialStatusType:
+          type: string
+          x-omitempty: true
+          example: Iden3ReverseSparseMerkleTreeProof
+          enum:
+          - Iden3commRevocationStatusV1.0
+          - Iden3ReverseSparseMerkleTreeProof
+          - Iden3OnchainSparseMerkleTreeProof2023
+    GetIdentitiesResponse:
+      type: object
+      required:
+      - identifier
+      - method
+      - blockchain
+      - network
+      properties:
+        identifier:
+          type: string
+          x-omitempty: false
+          example: did:polygonid:polygon:amoy:2qMZrfBsXuGFTwSqkqYki78zF3pe1vtXoqH4yRLsfs
+        credentialStatusType:
+          type: string
+          x-omitempty: true
+          example: Iden3ReverseSparseMerkleTreeProof
+          enum:
+          - Iden3commRevocationStatusV1.0
+          - Iden3ReverseSparseMerkleTreeProof
+          - Iden3OnchainSparseMerkleTreeProof2023
+        method:
+          type: string
+          x-omitempty: false
+          example: polygonid
+        blockchain:
+          type: string
+          x-omitempty: false
+          example: polygon
+        network:
+          type: string
+          x-omitempty: false
+          example: amoy
+        displayName:
+          type: string
+          x-omitempty: false
+          example: KYCAgeCredential Issuer identity
+    StateTransaction:
+      type: object
+      required:
+      - id
+      - txID
+      - state
+      - publishDate
+      - status
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        txID:
+          type: string
+          example: 0x8f271174b45ba7892d83...
+        state:
+          type: string
+          example: 13f9aadd4801d775e85a7ef45c2f6d02cdf83f0d724250417b165ff9cd88ee21
+        publishDate:
+          $ref: '#/components/schemas/TimeUTC'
+        status:
+          type: string
+          enum:
+          - created
+          - pending
+          - published
+          - failed
+          example: published
+    StateTransactionsPaginated:
+      type: object
+      required:
+      - items
+      - meta
+      properties:
+        items:
+          $ref: '#/components/schemas/StateTransactions'
+        meta:
+          $ref: '#/components/schemas/PaginatedMetadata'
+    TimeUTC:
+      type: string
+      x-go-type: timeapi.Time
+      x-go-type-import:
+        name: timeapi
+        path: github.com/polygonid/sh-id-platform/internal/timeapi
+      example: '2023-10-26T10:59:08Z'
+      x-omitempty: false
+  parameters:
+    pathIdentifier:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
+    pathIdentifier2:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
+        x-go-type: Identity
+        x-go-type-import:
+          name: customIdentity
+          path: github.com/polygonid/sh-id-platform/internal/api
+    pathKeyID:
+      name: id
+      in: path
+      required: true
+      description: Key ID in base64
+      schema:
+        type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

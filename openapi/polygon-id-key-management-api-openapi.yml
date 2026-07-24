@@ -1,0 +1,384 @@
+openapi: 3.0.0
+info:
+  title: Privado ID - Issuer Agent Key Management API
+  description: "The Issuer Node Core API is ideal for users who need multiple identities and for integrator profiles, who want to \ncreate solutions based on Privado ID functionalities and might be interested in having access to low level \ninformation such as Merkle Trees.\nThe Issuer Node API provide the following functionalities:\n* Create and retrieve Identities\n* Create a Verifiable Credential (VC)\n* Retrieve a Verifiable Credential or a list of Verifiable Credentials\n* Generate JSON to create a QR Code and use that to accept credentials in a wallet\n* Revoke a Verifiable Credential\n* Check revocation status of a Verifiable Credential\n* Retrieve the Revocation Status of a Verifiable Credential\n* Call Agent Endpoint using the Wallet App\n* Handle connections.\n"
+  version: '1'
+tags:
+- name: Key Management
+  description: Collection of endpoints related to Key Management
+paths:
+  /v2/identities/{identifier}/create-auth-credential:
+    post:
+      summary: Create Auth Credential
+      operationId: CreateAuthCredential
+      description: 'Endpoint to create a new Auth Credential
+
+        * keyID - only babyjubjub keys supported
+
+        '
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier2'
+      tags:
+      - Key Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAuthCredentialRequest'
+      responses:
+        '201':
+          description: Key added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - id
+                - credentialStatusType
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the created Auth Credential
+                    x-go-type: uuid.UUID
+                    x-go-type-import:
+                      name: uuid
+                      path: github.com/google/uuid
+                    example: 8edd8112-c415-11ed-b036-debe37e1cbd6
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/keys:
+    post:
+      summary: Create a Key
+      operationId: CreateKey
+      description: Endpoint to create a new key.
+      tags:
+      - Key Management
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier2'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateKeyRequest'
+      responses:
+        '201':
+          description: Crated Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateKeyResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    get:
+      summary: Get Keys
+      operationId: GetKeys
+      description: 'Returns a list of Keys for the provided identity.
+
+        '
+      security:
+      - basicAuth: []
+      tags:
+      - Key Management
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier2'
+      - in: query
+        name: max_results
+        schema:
+          type: integer
+          format: uint
+          example: 50
+          default: 50
+        description: Number of items to fetch on each page. Minimum is 10. Default is 50. No maximum by the moment.
+      - in: query
+        name: page
+        schema:
+          type: integer
+          format: uint
+          minimum: 1
+          example: 1
+        description: Page to fetch. First is one. If omitted, page 1 will be returned.
+      - in: query
+        name: type
+        schema:
+          type: string
+          x-omitempty: false
+          example: babyjubJub
+          enum:
+          - babyjubJub
+          - secp256k1
+          - ed25519
+        description: If not provided, all keys will be returned.
+      responses:
+        '200':
+          description: Keys collection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeysPaginated'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/keys/{id}:
+    get:
+      summary: Get a Key
+      operationId: GetKey
+      description: Get a specific key for the provided identity.
+      tags:
+      - Key Management
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier2'
+      - $ref: '#/components/parameters/pathKeyID'
+      responses:
+        '200':
+          description: Key found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Key'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      summary: Update a Key
+      operationId: UpdateKey
+      description: Update a specific key.
+      tags:
+      - Key Management
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier2'
+      - $ref: '#/components/parameters/pathKeyID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  example: New Key Name
+      responses:
+        '200':
+          description: Key found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessage'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  schemas:
+    CreateKeyResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+          description: base64 encoded keyID
+          example: a2V5cy9kaWQ6aWRlbjM6cG9seWdvbjphbW95OnhKQktvbkJ1dWdKbW1aMkdvS2gzOTM
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    PaginatedMetadata:
+      type: object
+      required:
+      - total
+      - page
+      - max_results
+      properties:
+        total:
+          type: integer
+          format: uint
+          example: 1
+        page:
+          type: integer
+          format: uint
+          example: 1
+        max_results:
+          type: integer
+          format: uint
+          example: 50
+    Key:
+      type: object
+      required:
+      - id
+      - keyType
+      - publicKey
+      - isAuthCredential
+      - name
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+          example: ZGlkOnBvbHlnb25pZDpwb2x5Z29uOmFtb3k6MnFRNjhKa1JjZjN5cXBYanRqVVQ3WjdVeW1TV0hzYll
+          description: base64 encoded keyID
+        keyType:
+          type: string
+          x-omitempty: false
+          example: babyjubJub
+          enum:
+          - babyjubJub
+          - secp256k1
+          - ed25519
+        publicKey:
+          type: string
+          x-omitempty: false
+          example: '0x04e3e7e'
+        isAuthCredential:
+          type: boolean
+          x-omitempty: false
+          example: true
+        name:
+          type: string
+          x-omitempty: false
+          example: my key
+    KeysPaginated:
+      type: object
+      required:
+      - items
+      - meta
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Key'
+        meta:
+          $ref: '#/components/schemas/PaginatedMetadata'
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    CreateAuthCredentialRequest:
+      type: object
+      required:
+      - keyID
+      - credentialStatusType
+      properties:
+        keyID:
+          type: string
+          x-omitempty: false
+          example: ZGlkOnBvbHlnb25pZDpwb2x5Z29uOmFtb3k6MnFRNjhKa1JjZjN5cXBYanRqVVQ3WjdVeW1TV0hzYll
+        expiration:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: uint32
+        revNonce:
+          type: integer
+          format: uint64
+        credentialStatusType:
+          type: string
+          x-omitempty: true
+          example: Iden3ReverseSparseMerkleTreeProof
+          enum:
+          - Iden3commRevocationStatusV1.0
+          - Iden3ReverseSparseMerkleTreeProof
+          - Iden3OnchainSparseMerkleTreeProof2023
+    CreateKeyRequest:
+      type: object
+      required:
+      - keyType
+      - name
+      properties:
+        keyType:
+          type: string
+          x-omitempty: false
+          example: babyjubJub
+          enum:
+          - babyjubJub
+          - secp256k1
+          - ed25519
+        name:
+          type: string
+          example: my key
+  parameters:
+    pathKeyID:
+      name: id
+      in: path
+      required: true
+      description: Key ID in base64
+      schema:
+        type: string
+    pathIdentifier2:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
+        x-go-type: Identity
+        x-go-type-import:
+          name: customIdentity
+          path: github.com/polygonid/sh-id-platform/internal/api
+  responses:
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,121 @@
+openapi: 3.0.0
+info:
+  title: Privado ID - Issuer Agent Config API
+  description: "The Issuer Node Core API is ideal for users who need multiple identities and for integrator profiles, who want to \ncreate solutions based on Privado ID functionalities and might be interested in having access to low level \ninformation such as Merkle Trees.\nThe Issuer Node API provide the following functionalities:\n* Create and retrieve Identities\n* Create a Verifiable Credential (VC)\n* Retrieve a Verifiable Credential or a list of Verifiable Credentials\n* Generate JSON to create a QR Code and use that to accept credentials in a wallet\n* Revoke a Verifiable Credential\n* Check revocation status of a Verifiable Credential\n* Retrieve the Revocation Status of a Verifiable Credential\n* Call Agent Endpoint using the Wallet App\n* Handle connections.\n"
+  version: '1'
+tags:
+- name: Config
+paths:
+  /status:
+    get:
+      summary: Healthcheck
+      operationId: Health
+      tags:
+      - Config
+      responses:
+        '200':
+          description: All services are running
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/supported-networks:
+    get:
+      summary: Get Supported Networks
+      operationId: GetSupportedNetworks
+      description: get supported blockchains and networks
+      security:
+      - basicAuth: []
+      tags:
+      - Config
+      responses:
+        '200':
+          description: Supported Networks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SupportedNetworks'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  schemas:
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    NetworkData:
+      type: object
+      required:
+      - name
+      - credentialStatus
+      properties:
+        name:
+          type: string
+          example: amoy
+        credentialStatus:
+          type: array
+          items:
+            type: string
+            example: Iden3commRevocationStatusV1.0
+    Health:
+      type: object
+      x-omitempty: false
+      additionalProperties:
+        type: boolean
+    SupportedNetworks:
+      type: object
+      x-omitempty: false
+      required:
+      - blockchain
+      - networks
+      properties:
+        blockchain:
+          type: string
+          example: polygon
+        networks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NetworkData'
+  responses:
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

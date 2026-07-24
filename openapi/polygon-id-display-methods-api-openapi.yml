@@ -1,0 +1,331 @@
+openapi: 3.0.0
+info:
+  title: Privado ID - Issuer Agent Display Methods API
+  description: "The Issuer Node Core API is ideal for users who need multiple identities and for integrator profiles, who want to \ncreate solutions based on Privado ID functionalities and might be interested in having access to low level \ninformation such as Merkle Trees.\nThe Issuer Node API provide the following functionalities:\n* Create and retrieve Identities\n* Create a Verifiable Credential (VC)\n* Retrieve a Verifiable Credential or a list of Verifiable Credentials\n* Generate JSON to create a QR Code and use that to accept credentials in a wallet\n* Revoke a Verifiable Credential\n* Check revocation status of a Verifiable Credential\n* Retrieve the Revocation Status of a Verifiable Credential\n* Call Agent Endpoint using the Wallet App\n* Handle connections.\n"
+  version: '1'
+tags:
+- name: Display Methods
+paths:
+  /v2/identities/{identifier}/display-method:
+    post:
+      summary: Create Display Method
+      operationId: CreateDisplayMethod
+      description: Create a display method for the provided identity.
+      security:
+      - basicAuth: []
+      tags:
+      - Display Methods
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDisplayMethodRequest'
+      responses:
+        '201':
+          description: Display Method Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UUIDResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    get:
+      summary: Get All Display Methods
+      operationId: GetAllDisplayMethods
+      description: 'Get all the display methods for the provided identity.
+
+        '
+      security:
+      - basicAuth: []
+      tags:
+      - Display Methods
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      - in: query
+        name: page
+        schema:
+          type: integer
+          format: uint
+          minimum: 1
+          example: 1
+      - in: query
+        name: max_results
+        schema:
+          type: integer
+          format: uint
+          example: 50
+          default: 50
+        description: Number of items to fetch on each page. Minimum is 10. Default is 50. No maximum by the moment.
+      - in: query
+        name: sort
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - created_at
+            - -created_at
+            - name
+            - -name
+            - type
+            - -type
+            default: -created_at
+          description: 'The minus sign (-) before field means descending order.
+
+            '
+      responses:
+        '200':
+          description: Display Method list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisplayMethodPaginated'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/display-method/{id}:
+    get:
+      summary: Get Display Method
+      operationId: GetDisplayMethod
+      description: 'Get a specific display method for the provided identity.
+
+        '
+      security:
+      - basicAuth: []
+      tags:
+      - Display Methods
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Display Method response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisplayMethodEntity'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      summary: Update Display Method
+      operationId: UpdateDisplayMethod
+      description: 'Update a specific display method for the provided identity.
+
+        '
+      security:
+      - basicAuth: []
+      tags:
+      - Display Methods
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: New Display Method Name
+                url:
+                  type: string
+                  example: https://new-display-method.com
+                type:
+                  type: string
+                  example: Iden3BasicDisplayMethodV1
+      responses:
+        '200':
+          description: Display Method updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessage'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: Delete Display Method
+      operationId: DeleteDisplayMethod
+      description: 'Delete a specific display method for the provided identity.
+
+        '
+      security:
+      - basicAuth: []
+      tags:
+      - Display Methods
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Display Method updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessage'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  schemas:
+    DisplayMethodPaginated:
+      type: object
+      required:
+      - items
+      - meta
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplayMethodEntity'
+        meta:
+          $ref: '#/components/schemas/PaginatedMetadata'
+    DisplayMethodEntity:
+      type: object
+      required:
+      - id
+      - name
+      - url
+      - type
+      properties:
+        id:
+          type: string
+          x-go-type: uuid.UUID
+          x-go-type-import:
+            name: uuid
+            path: github.com/google/uuid
+          example: 8edd8112-c415-11ed-b036-debe37e1cbd6
+        name:
+          type: string
+          example: a display method name
+        url:
+          type: string
+          example: https://someValidURL.com
+        type:
+          type: string
+          example: Iden3BasicDisplayMethodV1
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    PaginatedMetadata:
+      type: object
+      required:
+      - total
+      - page
+      - max_results
+      properties:
+        total:
+          type: integer
+          format: uint
+          example: 1
+        page:
+          type: integer
+          format: uint
+          example: 1
+        max_results:
+          type: integer
+          format: uint
+          example: 50
+    UUIDResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
+    CreateDisplayMethodRequest:
+      type: object
+      required:
+      - name
+      - url
+      properties:
+        name:
+          type: string
+          example: My Display Method
+        url:
+          type: string
+          example: https://my-display-method.com
+        type:
+          type: string
+          example: Iden3BasicDisplayMethodV1
+          description: Display method type (Iden3BasicDisplayMethodV1 is default value)
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+  parameters:
+    pathIdentifier:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: 'UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6
+
+        '
+      schema:
+        type: string
+        x-go-type: uuid.UUID
+        x-go-type-import:
+          name: uuid
+          path: github.com/google/uuid
+  responses:
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

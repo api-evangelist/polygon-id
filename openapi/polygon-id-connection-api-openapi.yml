@@ -1,0 +1,488 @@
+openapi: 3.0.0
+info:
+  title: Privado ID - Issuer Agent Connection API
+  description: "The Issuer Node Core API is ideal for users who need multiple identities and for integrator profiles, who want to \ncreate solutions based on Privado ID functionalities and might be interested in having access to low level \ninformation such as Merkle Trees.\nThe Issuer Node API provide the following functionalities:\n* Create and retrieve Identities\n* Create a Verifiable Credential (VC)\n* Retrieve a Verifiable Credential or a list of Verifiable Credentials\n* Generate JSON to create a QR Code and use that to accept credentials in a wallet\n* Revoke a Verifiable Credential\n* Check revocation status of a Verifiable Credential\n* Retrieve the Revocation Status of a Verifiable Credential\n* Call Agent Endpoint using the Wallet App\n* Handle connections.\n"
+  version: '1'
+tags:
+- name: Connection
+paths:
+  /v2/authentication/sessions/{id}:
+    get:
+      summary: Get Authentication Connection
+      operationId: getAuthenticationConnection
+      description: get authentication connection
+      parameters:
+      - $ref: '#/components/parameters/id'
+      tags:
+      - Connection
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuthenticationConnectionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/connections/{id}:
+    get:
+      summary: Get Connection
+      operationId: getConnection
+      description: Returns a connection of the provided identity by connection id.
+      tags:
+      - Connection
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConnectionResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: Delete Connection
+      operationId: deleteConnection
+      description: Removes a specific connection of the provided identity.
+      tags:
+      - Connection
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      - $ref: '#/components/parameters/id'
+      - name: revokeCredentials
+        in: query
+        required: false
+        description: 'Set revokeCredentials to true if you want to revoke the credentials of the connection
+
+          '
+        schema:
+          type: boolean
+      - name: deleteCredentials
+        in: query
+        required: false
+        description: 'Set deleteCredentials to true if you want to delete the credentials of the connection
+
+          '
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessage'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/connections/{id}/credentials:
+    delete:
+      summary: Delete Connection Credentials
+      operationId: deleteConnectionCredentials
+      description: Delete a connection and its credentials for a specific identity.
+      tags:
+      - Connection
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessage'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/connections:
+    get:
+      summary: Get Connections
+      operationId: getConnections
+      description: Get all the connections of the provided identity.
+      tags:
+      - Connection
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      - in: query
+        name: query
+        schema:
+          type: string
+        description: Query string to do full text search in connections.
+      - in: query
+        name: credentials
+        schema:
+          type: boolean
+        description: credentials=true to include the connection credentials.
+      - in: query
+        name: page
+        schema:
+          type: integer
+          format: uint
+          minimum: 1
+          example: 1
+        description: Page to fetch. First is one. If omitted, all results will be returned.
+      - in: query
+        name: max_results
+        schema:
+          type: integer
+          format: uint
+          example: 50
+          default: 50
+        description: Number of items to fetch on each page. Minimum is 10. Default is 50. No maximum by the moment.
+      - in: query
+        name: sort
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - createdAt
+            - -createdAt
+            - userID
+            - -userID
+            default: -createdAt
+          description: 'The minus sign (-) before createdAt means descending order.
+
+            '
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionsPaginated'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      summary: Create Connection
+      operationId: createConnection
+      description: Creates a connection between two identities.
+      tags:
+      - Connection
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConnectionRequest'
+      responses:
+        '201':
+          description: Connection Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessage'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /v2/identities/{identifier}/connections/{id}/credentials/revoke:
+    post:
+      summary: Revoke Connection Credentials
+      operationId: revokeConnectionCredentials
+      description: Revoke all the credentials of a connection for a specific identity.
+      tags:
+      - Connection
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/pathIdentifier'
+      - $ref: '#/components/parameters/id'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericMessage'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  parameters:
+    pathIdentifier:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: 'UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6
+
+        '
+      schema:
+        type: string
+        x-go-type: uuid.UUID
+        x-go-type-import:
+          name: uuid
+          path: github.com/google/uuid
+  schemas:
+    UUIDString:
+      type: string
+      x-omitempty: false
+      example: b7144f1c-d54e-4f67-a4f1-f2e7ff1beb07
+    ConnectionsPaginated:
+      type: object
+      required:
+      - items
+      - meta
+      properties:
+        items:
+          $ref: '#/components/schemas/GetConnectionsResponse'
+        meta:
+          $ref: '#/components/schemas/PaginatedMetadata'
+    GetConnectionResponse:
+      type: object
+      required:
+      - id
+      - userID
+      - issuerID
+      - createdAt
+      - credentials
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+          example: 7fff8112-c415-11ed-b036-debe37e1cbd6
+        userID:
+          type: string
+          x-omitempty: false
+          example: did:polygonid:polygon:amoy:2qMZrfBsXuGFTwSqkqYki78zF3pe1vtXoqH4yRLsfs
+        issuerID:
+          type: string
+          x-omitempty: false
+          example: did:polygonid:polygon:amoy:2qFpPHotk6oyaX1fcrpQFT4BMnmg8YszUwxYtaoGoe
+        createdAt:
+          $ref: '#/components/schemas/TimeUTC'
+        credentials:
+          type: array
+          x-omitempty: false
+          items:
+            $ref: '#/components/schemas/Credential'
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    EncryptedVC:
+      type: object
+      required:
+      - id
+      - data
+      - proof
+      - context
+      - type
+      - issuanceDate
+      - credentialStatus
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+        data:
+          type: object
+          x-go-type: protocol.JWEJSONEncryption
+          x-go-type-import:
+            name: protocol
+            path: github.com/iden3/iden3comm/v2/protocol
+        proof:
+          type: object
+          x-go-type: verifiable.CredentialProofs
+          x-go-type-import:
+            name: verifiable
+            path: github.com/iden3/go-schema-processor/v2/verifiable
+        context:
+          type: string
+          example: https://www.w3.org/2018/credentials/examples/v1
+        type:
+          type: string
+          example: KYCAgeCredential
+        expirationDate:
+          $ref: '#/components/schemas/TimeUTC'
+        issuanceDate:
+          $ref: '#/components/schemas/TimeUTC'
+        credentialStatus:
+          type: object
+          x-go-type: verifiable.CredentialStatus
+          x-go-type-import:
+            name: verifiable
+            path: github.com/iden3/go-schema-processor/v2/verifiable
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    PaginatedMetadata:
+      type: object
+      required:
+      - total
+      - page
+      - max_results
+      properties:
+        total:
+          type: integer
+          format: uint
+          example: 1
+        page:
+          type: integer
+          format: uint
+          example: 1
+        max_results:
+          type: integer
+          format: uint
+          example: 50
+    GetAuthenticationConnectionResponse:
+      type: object
+      required:
+      - connection
+      properties:
+        connection:
+          $ref: '#/components/schemas/AuthenticationConnection'
+    GetConnectionsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/GetConnectionResponse'
+    AuthenticationConnection:
+      type: object
+      required:
+      - id
+      - userID
+      - issuerID
+      - createdAt
+      - modifiedAt
+      properties:
+        id:
+          $ref: '#/components/schemas/UUIDString'
+        userID:
+          $ref: '#/components/schemas/UUIDString'
+        issuerID:
+          $ref: '#/components/schemas/UUIDString'
+        createdAt:
+          $ref: '#/components/schemas/TimeUTC'
+        modifiedAt:
+          $ref: '#/components/schemas/TimeUTC'
+    CreateConnectionRequest:
+      type: object
+      required:
+      - userDID
+      - userDoc
+      - issuerDoc
+      properties:
+        userDID:
+          type: string
+          example: did:polygonid:polygon:amoy:2qMZrfBsXuGFTwSqkqYki78zF3pe1vtXoqH4yRLsfs
+        userDoc:
+          type: object
+          format: byte
+        issuerDoc:
+          type: object
+          format: byte
+    TimeUTC:
+      type: string
+      x-go-type: timeapi.Time
+      x-go-type-import:
+        name: timeapi
+        path: github.com/polygonid/sh-id-platform/internal/timeapi
+      example: '2023-10-26T10:59:08Z'
+      x-omitempty: false
+    Credential:
+      type: object
+      required:
+      - id
+      - proofTypes
+      - revoked
+      - schemaHash
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+        proofTypes:
+          type: array
+          items:
+            type: string
+          example:
+          - BJJSignature2021
+        revoked:
+          type: boolean
+          example: false
+        schemaHash:
+          type: string
+          example: c9b2370371b7fa8b3dab2a5ba81b6838
+        vc:
+          type: object
+          x-go-type: verifiable.W3CCredential
+          x-go-type-import:
+            name: verifiable
+            path: github.com/iden3/go-schema-processor/v2/verifiable
+        encryptedVC:
+          $ref: '#/components/schemas/EncryptedVC'
+  responses:
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
