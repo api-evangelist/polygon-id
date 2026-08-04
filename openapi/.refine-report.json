@@ -1,0 +1,40 @@
+{
+  "provider": "polygon-id",
+  "sources": [
+    "polygon-id-agent-api-openapi.yml",
+    "polygon-id-auth-api-openapi.yml",
+    "polygon-id-config-api-openapi.yml",
+    "polygon-id-connection-api-openapi.yml",
+    "polygon-id-credentials-api-openapi.yml",
+    "polygon-id-display-methods-api-openapi.yml",
+    "polygon-id-identity-api-openapi.yml",
+    "polygon-id-internal-api-openapi.yml",
+    "polygon-id-key-management-api-openapi.yml",
+    "polygon-id-links-api-openapi.yml",
+    "polygon-id-payment-api-openapi.yml",
+    "polygon-id-public-api-openapi.yml",
+    "polygon-id-qr-store-api-openapi.yml",
+    "polygon-id-schemas-api-openapi.yml"
+  ],
+  "outputs": [
+    "polygon-id-agent-api-openapi.yml",
+    "polygon-id-auth-api-openapi.yml",
+    "polygon-id-config-api-openapi.yml",
+    "polygon-id-connection-api-openapi.yml",
+    "polygon-id-credentials-api-openapi.yml",
+    "polygon-id-display-methods-api-openapi.yml",
+    "polygon-id-identity-api-openapi.yml",
+    "polygon-id-internal-api-openapi.yml",
+    "polygon-id-key-management-api-openapi.yml",
+    "polygon-id-links-api-openapi.yml",
+    "polygon-id-payment-api-openapi.yml",
+    "polygon-id-public-api-openapi.yml",
+    "polygon-id-qr-store-api-openapi.yml",
+    "polygon-id-schemas-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
