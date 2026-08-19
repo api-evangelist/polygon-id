@@ -1,0 +1,282 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privado ID - Issuer Agent Identity API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Identity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Identities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/identities",
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to get all the identities"
+        },
+        {
+          "info": {
+            "name": "Create Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to create an identity to issue credentials.\nIssuer node supports two types of keys (field `type`):\n* BJJ Keys\n* ETH Keys\n\n`credentialStatusType` field is optional and and defines how the auth core claim will be evaluated during \nthe process to verify that it has not been revoked.\n"
+        },
+        {
+          "info": {
+            "name": "Get Identity Detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/identities/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to get an identity details"
+        },
+        {
+          "info": {
+            "name": "Update Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/identities/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to update the identity.\nThe displayName field is used to identify the identity in the UI.\n"
+        },
+        {
+          "info": {
+            "name": "Retry Publish Identity State",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities/:identifier/state/retry",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to retry publish identity state. If the publish state failed, this endpoint can be used to retry the publish."
+        },
+        {
+          "info": {
+            "name": "Publish Identity State",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities/:identifier/state/publish",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to publish identity state."
+        },
+        {
+          "info": {
+            "name": "Get Identity State Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/identities/:identifier/state/transactions",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page to fetch. First is 1. If not provided, default is 1."
+              },
+              {
+                "name": "max_results",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to fetch on each page. Default is 10."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to get identity state transactions.\nTo get all transactions, use the filter `all`. To get the latest transaction, use the filter `latest`.\nThe transactions are paginated for `filter=all`. If the filter is not provided, the default is `all`.\n"
+        },
+        {
+          "info": {
+            "name": "Get Identity State Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/identities/:identifier/state/status",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to get identity state status, if the identity status is published or not.\nIf the status is `pendingActions` is true it means that the identity has pending actions to be published.\n"
+        },
+        {
+          "info": {
+            "name": "Create Auth Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities/:identifier/create-auth-credential",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to create a new Auth Credential\n* keyID - only babyjubjub keys supported\n"
+        },
+        {
+          "info": {
+            "name": "Delete Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/identities/:identifier/keys/:id",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Key ID in base64"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Remove a specific key for the provided identity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

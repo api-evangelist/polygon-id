@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privado ID - Issuer Agent Config API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Config",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Healthcheck",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/status"
+          },
+          "docs": "Healthcheck"
+        },
+        {
+          "info": {
+            "name": "Get Supported Networks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/supported-networks",
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "get supported blockchains and networks"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

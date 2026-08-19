@@ -1,0 +1,180 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privado ID - Issuer Agent Key Management API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Key Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Auth Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities/:identifier/create-auth-credential",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to create a new Auth Credential\n* keyID - only babyjubjub keys supported\n"
+        },
+        {
+          "info": {
+            "name": "Get Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/identities/:identifier/keys",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "max_results",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to fetch on each page. Minimum is 10. Default is 50. No maximum by the moment."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page to fetch. First is one. If omitted, page 1 will be returned."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "If not provided, all keys will be returned."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns a list of Keys for the provided identity.\n"
+        },
+        {
+          "info": {
+            "name": "Create a Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities/:identifier/keys",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Endpoint to create a new key."
+        },
+        {
+          "info": {
+            "name": "Get a Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/identities/:identifier/keys/:id",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Key ID in base64"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Get a specific key for the provided identity."
+        },
+        {
+          "info": {
+            "name": "Update a Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/identities/:identifier/keys/:id",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Key ID in base64"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Update a specific key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1997 @@
+{
+  "item": [
+    {
+      "id": "64cdb475-f701-4417-bad3-88b8b65c3e1f",
+      "name": "Links",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "658bc3c9-9bb6-400a-a3da-38458163b706",
+          "name": "Get Links",
+          "request": {
+            "name": "Get Links",
+            "description": {
+              "content": "Returns a list of links for the provided identity.\nFilter between all | active | inactive | exceeded links and also perform a full text search with the query parameter.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities",
+                ":identifier",
+                "credentials",
+                "links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "Query string to do full text search in schema types and attributes."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Schema type:\n  * `all` - All links. (default value)\n  * `active` - Only active links. (Not expired, no issuance exceeded and not deactivated\n  * `inactive` - Only deactivated links\n  * `exceeded` - Expired or maximum issuance exceeded\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) Issuer identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ff3aedc7-fb12-41ff-ad67-0daed590ac80",
+              "name": "Link collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"8edd8112-c415-11ed-b036-debe37e1cbd6\",\n    \"schemaUrl\": \"https://someValidURL.com\",\n    \"schemaType\": \"KYCAgeCredential\",\n    \"credentialSubject\": {\n      \"birthday\": 19960424,\n      \"documentType\": 2,\n      \"type\": \"KYCAgeCredential\"\n    },\n    \"issuedClaims\": 8139,\n    \"active\": false,\n    \"status\": \"inactive\",\n    \"proofTypes\": [\n      \"BJJSignature2021\"\n    ],\n    \"schemaHash\": \"c9b2370371b7fa8b3dab2a5ba81b6838\",\n    \"createdAt\": \"2023-10-26T10:59:08Z\",\n    \"deepLink\": \"iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4\",\n    \"universalLink\": \"https://wallet.privado.id#request_uri=url\",\n    \"maxIssuance\": 6945,\n    \"expiration\": \"2023-10-26T10:59:08Z\",\n    \"credentialExpiration\": \"2023-10-26T10:59:08Z\",\n    \"refreshService\": {\n      \"id\": \"string\",\n      \"type\": \"Iden3RefreshService2023\"\n    },\n    \"displayMethod\": {\n      \"id\": \"string\",\n      \"type\": \"Iden3BasicDisplayMethodV1\"\n    }\n  },\n  {\n    \"id\": \"8edd8112-c415-11ed-b036-debe37e1cbd6\",\n    \"schemaUrl\": \"https://someValidURL.com\",\n    \"schemaType\": \"KYCAgeCredential\",\n    \"credentialSubject\": {\n      \"birthday\": 19960424,\n      \"documentType\": 2,\n      \"type\": \"KYCAgeCredential\"\n    },\n    \"issuedClaims\": 3906,\n    \"active\": false,\n    \"status\": \"exceeded\",\n    \"proofTypes\": [\n      \"BJJSignature2021\"\n    ],\n    \"schemaHash\": \"c9b2370371b7fa8b3dab2a5ba81b6838\",\n    \"createdAt\": \"2023-10-26T10:59:08Z\",\n    \"deepLink\": \"iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4\",\n    \"universalLink\": \"https://wallet.privado.id#request_uri=url\",\n    \"maxIssuance\": 6808,\n    \"expiration\": \"2023-10-26T10:59:08Z\",\n    \"credentialExpiration\": \"2023-10-26T10:59:08Z\",\n    \"refreshService\": {\n      \"id\": \"string\",\n      \"type\": \"Iden3RefreshService2023\"\n    },\n    \"displayMethod\": {\n      \"id\": \"string\",\n      \"type\": \"Iden3BasicDisplayMethodV1\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a6626a7-2c80-41e4-8736-81e7e20003e5",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f059179d-c0d1-4b30-bcab-2fedc36c6b43",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c90af235-b37b-4de9-8ca7-157caf92c96b",
+              "name": "Internal Server  error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "800f979d-f48d-4c59-b969-1180217d8e72",
+          "name": "Create Link",
+          "request": {
+            "name": "Create Link",
+            "description": {
+              "content": "Create a link for the provided identity. With this link, the identity can issue credentials.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities",
+                ":identifier",
+                "credentials",
+                "links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) Issuer identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schemaID\": \"<string>\",\n  \"signatureProof\": \"<boolean>\",\n  \"mtProof\": \"<boolean>\",\n  \"credentialSubject\": \"<object>\",\n  \"credentialExpiration\": \"<dateTime>\",\n  \"expiration\": \"<dateTime>\",\n  \"limitedClaims\": \"<integer>\",\n  \"refreshService\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"displayMethod\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "836f87fb-9cd5-4833-a7c4-fc5e4700a98e",
+              "name": "Link created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemaID\": \"<string>\",\n  \"signatureProof\": true,\n  \"mtProof\": false,\n  \"credentialSubject\": {\n    \"birthday\": 19960424,\n    \"documentType\": 2,\n    \"type\": \"KYCAgeCredential\"\n  },\n  \"credentialExpiration\": \"2025-04-17 11:40:43.681857-03:00\",\n  \"expiration\": \"2025-04-17 11:40:43.681857-03:00\",\n  \"limitedClaims\": 5,\n  \"refreshService\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"displayMethod\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"c79c9c04-8c98-40f2-a7a0-5eeabf08d836\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "962b5f76-9a9e-4a5d-8395-46280e236f91",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemaID\": \"<string>\",\n  \"signatureProof\": true,\n  \"mtProof\": false,\n  \"credentialSubject\": {\n    \"birthday\": 19960424,\n    \"documentType\": 2,\n    \"type\": \"KYCAgeCredential\"\n  },\n  \"credentialExpiration\": \"2025-04-17 11:40:43.681857-03:00\",\n  \"expiration\": \"2025-04-17 11:40:43.681857-03:00\",\n  \"limitedClaims\": 5,\n  \"refreshService\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"displayMethod\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfc94ad6-2ce7-4159-933d-2d685a741245",
+              "name": "Internal Server  error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemaID\": \"<string>\",\n  \"signatureProof\": true,\n  \"mtProof\": false,\n  \"credentialSubject\": {\n    \"birthday\": 19960424,\n    \"documentType\": 2,\n    \"type\": \"KYCAgeCredential\"\n  },\n  \"credentialExpiration\": \"2025-04-17 11:40:43.681857-03:00\",\n  \"expiration\": \"2025-04-17 11:40:43.681857-03:00\",\n  \"limitedClaims\": 5,\n  \"refreshService\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"displayMethod\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62cc12df-4cf3-43ef-8177-9135b56f270b",
+          "name": "Get Link",
+          "request": {
+            "name": "Get Link",
+            "description": {
+              "content": "Get a specific link for the provided identity.\n`deepLink` and `universalLink` fields are returned if the credential has an associated protocol message. <br/>\nTo create an offer for the link, use the endpoint `/v2/identities/{identifier}/credentials/links/{id}/offer`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities",
+                ":identifier",
+                "credentials",
+                "links",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) Issuer identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3cf96f0d-aaff-47fe-999a-0edc659b8904",
+              "name": "Credential link response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"8edd8112-c415-11ed-b036-debe37e1cbd6\",\n  \"schemaUrl\": \"https://someValidURL.com\",\n  \"schemaType\": \"KYCAgeCredential\",\n  \"credentialSubject\": {\n    \"birthday\": 19960424,\n    \"documentType\": 2,\n    \"type\": \"KYCAgeCredential\"\n  },\n  \"issuedClaims\": 3331,\n  \"active\": true,\n  \"status\": \"exceeded\",\n  \"proofTypes\": [\n    \"BJJSignature2021\"\n  ],\n  \"schemaHash\": \"c9b2370371b7fa8b3dab2a5ba81b6838\",\n  \"createdAt\": \"2023-10-26T10:59:08Z\",\n  \"deepLink\": \"iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4\",\n  \"universalLink\": \"https://wallet.privado.id#request_uri=url\",\n  \"maxIssuance\": 997,\n  \"expiration\": \"2023-10-26T10:59:08Z\",\n  \"credentialExpiration\": \"2023-10-26T10:59:08Z\",\n  \"refreshService\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"displayMethod\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4735e8ee-5bb2-4fbc-b9bc-9516e91f51ef",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14f9ee11-6ddb-48cf-a635-42247dff70ab",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9cc6cfe-df9e-448e-b60d-d8ab4705aba6",
+              "name": "Internal Server  error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5220bb50-7659-4290-957d-c70519d25b4b",
+          "name": "Activate | Deactivate Link",
+          "request": {
+            "name": "Activate | Deactivate Link",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "identities",
+                ":identifier",
+                "credentials",
+                "links",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) Issuer identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"active\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "489439cc-0b64-4936-b062-d2c802e7371f",
+              "name": "Link updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45dafd32-a624-4644-8f20-30d30c59ad45",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7977398c-9f09-4709-b1c7-cea5de5086c0",
+              "name": "Internal Server  error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b9f4c10-3129-400c-8ca9-873adbebbb67",
+          "name": "Delete Link",
+          "request": {
+            "name": "Delete Link",
+            "description": {
+              "content": "Remove a specific link for the provided identity.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities",
+                ":identifier",
+                "credentials",
+                "links",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) Issuer identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cf125281-d7a9-494b-bfcc-c53d53f090cb",
+              "name": "Link deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86bbe40d-cdb5-4ad0-a10d-4466e077f32f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3096b62-2e67-4c0b-a912-326de9e2d6f5",
+              "name": "Internal Server  error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "100cceca-c55e-4637-b9c1-78a74d84e5af",
+          "name": "Create a credential offer for a link",
+          "request": {
+            "name": "Create a credential offer for a link",
+            "description": {
+              "content": "Create a credential offer for the provided link",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities",
+                ":identifier",
+                "credentials",
+                "links",
+                ":id",
+                "offer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) Issuer identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "98dcd3cd-cb3a-4a99-b370-b73bd5345d54",
+              "name": "Link offer generated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id",
+                    "offer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"issuer\": {\n    \"displayName\": \"my issuer\",\n    \"logo\": \"http://my-public-logo/logo.jpg\"\n  },\n  \"deepLink\": \"iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4\",\n  \"universalLink\": \"https://wallet.privado.id#request_uri=url\",\n  \"message\": \"string\",\n  \"linkDetail\": {\n    \"id\": \"8edd8112-c415-11ed-b036-debe37e1cbd6\",\n    \"schemaUrl\": \"https://someValidURL.com\",\n    \"schemaType\": \"KYCAgeCredential\",\n    \"proofTypes\": [\n      \"BJJSignature2021\"\n    ],\n    \"schemaHash\": \"c9b2370371b7fa8b3dab2a5ba81b6838\"\n  },\n  \"sessionID\": \"string\",\n  \"linkID\": 9227\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7392a596-8e27-475d-ae34-e2fa22ef05eb",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id",
+                    "offer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bdf052a6-943a-4a2b-a116-a118c802e9cc",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id",
+                    "offer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3c97fcf-2f4a-4684-a921-2b85499c2eba",
+              "name": "Internal Server  error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    ":id",
+                    "offer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ab56b77-4695-40e6-a954-56741fae71a8",
+          "name": "Create Link QR Code Callback",
+          "request": {
+            "name": "Create Link QR Code Callback",
+            "description": {
+              "content": "Process the callback from the QR code link",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities",
+                ":identifier",
+                "credentials",
+                "links",
+                "callback"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "linkID",
+                  "value": "<string>",
+                  "description": "(Required) Session ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) Issuer identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>"
+            }
+          },
+          "response": [
+            {
+              "id": "cd8195e2-c814-42d0-81d8-6c9ff386549a",
+              "name": "Return the offer for fetching the credential if the link was created for a Signature Credential or just 200 http status if the link was created for MTP Credential.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "linkID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "jwz-token"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da6943bd-0b55-4ce9-a386-de15f8596f40",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "linkID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "jwz-token"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e44fb37e-d564-45ee-b112-2e5665b54fd9",
+              "name": "Internal Server  error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities",
+                    ":identifier",
+                    "credentials",
+                    "links",
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "linkID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Issuer identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "jwz-token"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "12204a94-4407-4f01-ba93-a8265e02efb9",
+    "name": "Privado ID - Issuer Agent Links API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Issuer Node Core API is ideal for users who need multiple identities and for integrator profiles, who want to \ncreate solutions based on Privado ID functionalities and might be interested in having access to low level \ninformation such as Merkle Trees.\nThe Issuer Node API provide the following functionalities:\n* Create and retrieve Identities\n* Create a Verifiable Credential (VC)\n* Retrieve a Verifiable Credential or a list of Verifiable Credentials\n* Generate JSON to create a QR Code and use that to accept credentials in a wallet\n* Revoke a Verifiable Credential\n* Check revocation status of a Verifiable Credential\n* Retrieve the Revocation Status of a Verifiable Credential\n* Call Agent Endpoint using the Wallet App\n* Handle connections.\n",
+      "type": "text/plain"
+    }
+  }
+}

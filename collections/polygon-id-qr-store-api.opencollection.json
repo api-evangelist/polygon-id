@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privado ID - Issuer Agent QR Store API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "QR Store",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get QrCode from store",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/qr-store",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "issuer",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a previously generated QR code via url shortener method"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

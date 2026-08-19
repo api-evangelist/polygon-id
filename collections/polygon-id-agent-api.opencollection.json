@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privado ID - Issuer Agent API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Agent",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/agent"
+          },
+          "docs": "Identity Agent Endpoint"
+        },
+        {
+          "info": {
+            "name": "Agent V1",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/agent"
+          },
+          "docs": "Identity Agent Endpoint for v1."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

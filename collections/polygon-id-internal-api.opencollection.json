@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privado ID - Issuer Agent Internal API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Internal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/"
+          },
+          "docs": "Get the documentation"
+        },
+        {
+          "info": {
+            "name": "Health Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health"
+          },
+          "docs": "Health Check"
+        },
+        {
+          "info": {
+            "name": "Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/callback",
+            "params": [
+              {
+                "name": "sessionID",
+                "value": "",
+                "type": "query",
+                "description": "ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd\n"
+              }
+            ]
+          },
+          "docs": "Callback"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

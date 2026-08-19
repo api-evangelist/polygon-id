@@ -1,0 +1,255 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privado ID - Issuer Agent Connection API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Connection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Authentication Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/authentication/sessions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "get authentication connection"
+        },
+        {
+          "info": {
+            "name": "Get Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/identities/:identifier/connections/:id",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns a connection of the provided identity by connection id."
+        },
+        {
+          "info": {
+            "name": "Delete Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/identities/:identifier/connections/:id",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+              },
+              {
+                "name": "revokeCredentials",
+                "value": "",
+                "type": "query",
+                "description": "Set revokeCredentials to true if you want to revoke the credentials of the connection\n"
+              },
+              {
+                "name": "deleteCredentials",
+                "value": "",
+                "type": "query",
+                "description": "Set deleteCredentials to true if you want to delete the credentials of the connection\n"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Removes a specific connection of the provided identity."
+        },
+        {
+          "info": {
+            "name": "Delete Connection Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/identities/:identifier/connections/:id/credentials",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Delete a connection and its credentials for a specific identity."
+        },
+        {
+          "info": {
+            "name": "Get Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/identities/:identifier/connections",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query string to do full text search in connections."
+              },
+              {
+                "name": "credentials",
+                "value": "",
+                "type": "query",
+                "description": "credentials=true to include the connection credentials."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page to fetch. First is one. If omitted, all results will be returned."
+              },
+              {
+                "name": "max_results",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to fetch on each page. Minimum is 10. Default is 50. No maximum by the moment."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Get all the connections of the provided identity."
+        },
+        {
+          "info": {
+            "name": "Create Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities/:identifier/connections",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Creates a connection between two identities."
+        },
+        {
+          "info": {
+            "name": "Revoke Connection Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities/:identifier/connections/:id/credentials/revoke",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Revoke all the credentials of a connection for a specific identity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

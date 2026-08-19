@@ -1,0 +1,226 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privado ID - Issuer Agent Links API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/identities/:identifier/credentials/links",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query string to do full text search in schema types and attributes."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Schema type:\n  * `all` - All links. (default value)\n  * `active` - Only active links. (Not expired, no issuance exceeded and not deactivated\n  * `inactive` - Only deactivated links\n  * `exceeded` - Expired or maximum issuance exceeded\n"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Returns a list of links for the provided identity.\nFilter between all | active | inactive | exceeded links and also perform a full text search with the query parameter.\n"
+        },
+        {
+          "info": {
+            "name": "Create Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities/:identifier/credentials/links",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Create a link for the provided identity. With this link, the identity can issue credentials."
+        },
+        {
+          "info": {
+            "name": "Get Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/identities/:identifier/credentials/links/:id",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Get a specific link for the provided identity.\n`deepLink` and `universalLink` fields are returned if the credential has an associated protocol message. <br/>\nTo create an offer for the link, use the endpoint `/v2/identities/{identifier}/credentials/links/{id}/offer`.\n"
+        },
+        {
+          "info": {
+            "name": "Activate | Deactivate Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/identities/:identifier/credentials/links/:id",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Activate | Deactivate Link"
+        },
+        {
+          "info": {
+            "name": "Delete Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/identities/:identifier/credentials/links/:id",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Remove a specific link for the provided identity."
+        },
+        {
+          "info": {
+            "name": "Create a credential offer for a link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities/:identifier/credentials/links/:id/offer",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+              }
+            ]
+          },
+          "docs": "Create a credential offer for the provided link"
+        },
+        {
+          "info": {
+            "name": "Create Link QR Code Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/identities/:identifier/credentials/links/callback",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "linkID",
+                "value": "",
+                "type": "query",
+                "description": "Session ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd\n"
+              }
+            ]
+          },
+          "docs": "Process the callback from the QR code link"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

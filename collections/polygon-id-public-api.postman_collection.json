@@ -1,0 +1,527 @@
+{
+  "item": [
+    {
+      "id": "96b2aded-1638-45f1-ab5b-b94e617794ee",
+      "name": "Public",
+      "description": {
+        "content": "Public endpoints for integrators",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eed7443a-ad0c-408b-a53e-eebdb4bc6ec6",
+          "name": "Sign in",
+          "request": {
+            "name": "Sign in",
+            "description": {
+              "content": "This endpoint returns a QR Code and a Session ID. \nThe QR Code can be used to produce a QR Code to be scanned with the PID to perform the verification.\nSessionID can be used to pool the status of the verification with the /status endpoint.\n\nThe scope is an array of objects that contains the information of the verification to be performed.\nMultiple verifications can be performed in a single request and from different credentials.\n\nIn order to create your custom queries visit our [query builder](https://schema-builder-dev.polygonid.me/query-builder/)\n\n### circuitID values:\n\nV3 Circuits are still in beta. V3 Circuits support `nullifiers` that can be used for checking weather a credential has been already verifier or not.\nIn order to use V3 circuits, please enable them in the PID app under the settings section.\n\n#### Off-chain\n\nV2 circuits:\n- `credentialAtomicQuerySigV2`: for SIG credentials verifications \n- `credentialAtomicQueryMTPV2`: for MTP credentials verifications\n\nV3 circuits:\n- `credentialAtomicQueryV3-beta.1`: MTP and SIG credentials verifications\n\n#### On-chain\n\nV2 circuits:\n- `credentialAtomicQuerySigV2OnChain`: for SIG credentials verifications \n- `credentialAtomicQueryMTPV2OnChain`: for MTP credentials verifications\n\nV3 circuits:\n- `credentialAtomicQueryV3OnChain-beta.1`: MTP and SIG credentials verifications\n\nLinkedMQuery circuit:\n- `linkedMultiQuery10-beta.1`: for linked verifications.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sign-in"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scope\": [\n    {\n      \"circuitId\": \"<string>\",\n      \"query\": \"<object>\",\n      \"id\": \"<uint32>\",\n      \"transactionData\": {\n        \"contractAddress\": \"<string>\",\n        \"methodID\": \"<string>\",\n        \"chainID\": \"<integer>\",\n        \"network\": \"<string>\"\n      },\n      \"params\": \"<object>\"\n    },\n    {\n      \"circuitId\": \"<string>\",\n      \"query\": \"<object>\",\n      \"id\": \"<uint32>\",\n      \"transactionData\": {\n        \"contractAddress\": \"<string>\",\n        \"methodID\": \"<string>\",\n        \"chainID\": \"<integer>\",\n        \"network\": \"<string>\"\n      },\n      \"params\": \"<object>\"\n    }\n  ],\n  \"chainID\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"to\": \"<string>\",\n  \"from\": \"<string>\",\n  \"transactionData\": {\n    \"contractAddress\": \"<string>\",\n    \"methodID\": \"<string>\",\n    \"chainID\": \"<integer>\",\n    \"network\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ad282fe2-dc1f-429e-ae74-f54390df0922",
+              "name": "Authorization Request created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sign-in"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainID\": \"80002\",\n  \"scope\": [\n    {\n      \"circuitID\": \"credentialAtomicQuerySigV2\",\n      \"id\": 1,\n      \"query\": {\n        \"context\": \"https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld\",\n        \"allowedIssuers\": [\n          \"*\"\n        ],\n        \"type\": \"KYCAgeCredential\",\n        \"credentialSubject\": {\n          \"birthday\": {\n            \"$lt\": 20201010\n          }\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sessionID\": \"8edd8112-c415-11ed-b036-debe37e1cbd6\",\n  \"qrCode\": \"iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.polygonid.me%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8cac93cf-6d83-404d-9ba4-f313b904a2f7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sign-in"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainID\": \"80002\",\n  \"scope\": [\n    {\n      \"circuitID\": \"credentialAtomicQuerySigV2\",\n      \"id\": 1,\n      \"query\": {\n        \"context\": \"https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld\",\n        \"allowedIssuers\": [\n          \"*\"\n        ],\n        \"type\": \"KYCAgeCredential\",\n        \"credentialSubject\": {\n          \"birthday\": {\n            \"$lt\": 20201010\n          }\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c530ca7a-00b2-4dd6-aca4-cfef9bba0e36",
+              "name": "Internal Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sign-in"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chainID\": \"80002\",\n  \"scope\": [\n    {\n      \"circuitID\": \"credentialAtomicQuerySigV2\",\n      \"id\": 1,\n      \"query\": {\n        \"context\": \"https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld\",\n        \"allowedIssuers\": [\n          \"*\"\n        ],\n        \"type\": \"KYCAgeCredential\",\n        \"credentialSubject\": {\n          \"birthday\": {\n            \"$lt\": 20201010\n          }\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a20512c8-528a-46ff-b574-3d1b1307b860",
+          "name": "Get Status",
+          "request": {
+            "name": "Get Status",
+            "description": {},
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sessionID",
+                  "value": "<string>",
+                  "description": "(Required) ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3d6012ed-f9a6-4257-b271-7893f94d4d7e",
+              "name": "Get response status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sessionID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"pending\",\n  \"message\": \"error message\",\n  \"jwz\": \"eyJhbGciOiJncm90aDE2IiwiY2lyY3VpdElkIjoiYXV0aFYyIiwiY3JpdCI6WyJjaXJjdWl0SWQiXSwidHlwIjoiYXBwbGljYXRpb24vaWRlbjMtemtwLWpzb24ifQ.eyJpZCI6IjBlM2Y1YWEwLTZkN2EtNDE5OS1hNDBkLTg2MTU0MTE0MGMxZiIsInR5cCI6ImFwcGxpY2F0aW9uL2lkZW4zLXprcC1qc29uIiwidHlwZSI6Imh0dHBzOi8vaWRlbjMtY29tbXVuaWNhdGlvbi5pby9hdXRob3JpemF0aW9uLzEuMC9yZXNwb25zZSIsInRoaWQiOiJiMzI4YzMzOS0zZWQyLTQzMTItYTg1YS04YmIyMzhmYTk4MDkiLCJib2R5Ijp7ImRpZF9kb2MiOnsiY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvZGlkL3YxIl0sImlkIjoiZGlkOnBvbHlnb25pZDpwb2x5Z29uOm11bWJhaToycUYxYnBLWjhSMk1WVnE5R3dRUkI1NEoxcVNabmVTR0d6bThHaEZrNkciLCJzZXJ2aWNlIjpbeyJpZCI6ImRpZDpwb2x5Z29uaWQ6cG9seWdvbjptdW1iYWk6MnFGMWJwS1o4UjJNVlZxOUd3UVJCNTRKMXFTWm5lU0dHem04R2hGazZHI3B1c2giLCJ0eXBlIjoicHVzaC1ub3RpZmljYXRpb24iLCJzZXJ2aWNlRW5kcG9pbnQiOiJodHRwczovL3B1c2gtc3RhZ2luZy5wb2x5Z29uaWQuY29tL2FwaS92MSIsIm1ldGFkYXRhIjp7ImRldmljZXMiOlt7ImNpcGhlcnRleHQiOiJLd1p3aHNrSFRzY1lrRDVOUE5IVjhXZ1FOMVJ0d3Z6d3czWW5BZ0d0UGNhbHp5S0RYWVVJOVhIOENoYk5kY3c3THhhNFcyNjltSE81WkRsSWZRZ0NhTTc4c0g1ZWRhRGFidkNEeU5ERS83akJuL1JzTnoxR0oyL0tlMm5GQ3Axajk1MGVRdU80MXpFcjVMT0lEajlwQ0xNQVhjY28yOGJybklyRkZJeEo4dS9keEJrbWdiek5DcUZKbnhlYnNVTFZjT055bE5VR1dCNzl6MnhhTXVvVzZCaWlnZkI4UjJGOUF2ZkJSdDEzK1ZqSlFhTHBCejc3S0hTbXd3cVpCZ2xHZ0NkTElxMTZ5c3FmUDJ6MVM4M3lWbWEzdmdiTVdmSGozNkxQaUR1ZVYyOUwxS1ZSRUZFdG91Vk9oYVRlS2Q4Z0RIRGx1RVJXamJiZ1BDcENhNGZMTnZQMWkrYlZZNlBrbUsxQTFvMnl4Y1pRKzh5bkorU2NtK2Vyb3ZUQjgycVlDTnlKd0hVZGRsdVNkZ0NkaWpMWlh3TW5CRjMwalVMR2hWaGxzSlNUZTFiem92bmVqVk0wbXhUUlNHSi9reGFRc0lXVWkwMjJRWmVHeDJJNXpseG1vZitTWWZ3UWs5VnMvREZWMUdSTzh4YnpvQWVlS1U4bGJlZXRoR2d0RFZTWGx0Wjk3b0pwSDR6a25TTTJMWW1yWVBaMUwwMGdMTFhvU0s2SllMZ2U2YWlGSVIyZ2YySW00Q29Qa0FjMGxhUjA2REJYb2FUWEY1M3Q1VlBsNkc1cTlkVm9Ldld6ekY2Y2hua2FJZ0Z1aFQwQStjMHNtaHplcSs3UFUxOTBxMEt4Wmo5YmtQUUYwNENwQUlTZzFPQVVudEVtQ0NGaWt4UWF3NHh0djJmbzRxWT0iLCJhbGciOiJSU0EtT0FFUC01MTIifV19fV19LCJtZXNzYWdlIjpudWxsLCJzY29wZSI6W3sicHJvb2YiOnsicGlfYSI6WyIxMjkxNjg4NzE0MDg1NDQ1Nzg5MjY0NzYyMDUwMjA5MTg1MzUyNzIyMzI4NDUwODY0MzU5NzE3NDI2ODIyMDkwMDQ2MDQ3NDQ3NTE2MSIsIjc4MTU4ODU5NjEwMzc0NTA4MTcxMTQ4NTI3OTg3OTE0Mzc3MjMzMjQ4MTY1NzQzMjkzNjY0NTE3MDU0NzA1NjQzOTgzNTQyMjYyMDQiLCIxIl0sInBpX2IiOltbIjE0NjI1OTM0OTE3ODU1NDg5NjQ3MzI2MDQ2MzA3NTYyODU3OTYxNDI0NzU2MjM3MjUzMDIxMzE3MTM1OTIyODMzODIwNjExMTk0MDQ2IiwiNTAxODc0NTQ2MzAwMjIzODI1OTI0NTU3NDQyNjQzMTE3MDAyMjI1NDc0MjY5NTIzMDM0Mzg5MDE0MzIzMzQxOTA3NjU4NjA4MjAwOCJdLFsiOTc3NzYxMDI5MDcwMDQxNTcxNjQzNzk3MjgwODcwMTg1MzYzMTg2NjA0Mzc4MjU1NDE0MDc5NDAyNTM2MjE1ODU3MjMzMDEyNjQwMSIsIjM0MzIxOTEwMTg1MjExODQwMjExNDQwODQyNTk0MDg4OTQ1NTYyNTA2NzE2NzQ1NjI3NzMyODYwMjUxOTcyNTQ0Nzc4NTkzNzQ0OTgiXSxbIjEiLCIwIl1dLCJwaV9jIjpbIjYwMzkzNDI2MjI2NjYzMzg2NDU1MTI1MTAzNjM3MzU4NDk1NTIxNzg0NTc4NjY2OTExNzQ0MzU5MzczODkzOTkyNDExODkzMDYyNDYiLCIxOTc1MDI0NjU3NDQzNDIxNDYwNjE3NDc4NjE5MTQzMjE5OTA5ODgxNjIxMTg5Mjg1MjMyNjYyNzg1MTk4NzAyMjgwNDQxMzY4OTQ2OSIsIjEiXSwicHJvdG9jb2wiOiJncm90aDE2IiwiY3VydmUiOiJibjEyOCJ9LCJwdWJfc2lnbmFscyI6WyIxIiwiMjQ1MTc1NTUyNzkwMjgzNTMwNTExNzgxNTc0NjAzOTk5MzE5OTQzMzk3NTU4NTY2ODk5ODk2MjMxNTczOTUyODYxNzQyMDg1MTQiLCIxOTUxMDEzMjk5NjcyNTM2NjU5NjQ1NDU2ODc4NDY2MjYwMTU2MjYwOTM1MDMyNzEzMzE2NDgxMDcwNzUzMzg5NDU1Nzc3Njg1NDAxMiIsIjEiLCIyMTE5NjQyNTkyNTU0MDYxMTgzNDA3MjA1MDQyNDI0NTkwNzUyMjM3NzY1Mzg1MjYxMjMzNDgwNzUxNDI0NzE4MDM1NDMyNzA0MiIsIjEiLCIxMDc5MzQ3Njc5NzgzNzgzNjA3MjM5Mjc1ODIxNTQ0MTQ5MzMwNDEzNzkxOTk4NDc5MjI4MTAyMjM0MDg2NDI3ODIyODg1OTg1MjMwNiIsIjE3MDI2MzMzMzciLCIxMDYyMjgxMzg1NzgxNzczNzE1NTY0MTI3MzQ3NDAyNTk0MDUwNzMiLCIwIiwiODI2MjE1ODQ1MTY0NTQ2NjExNjgyNTYwMTg4OTUwMzAxMTkwODYwMTE1NTE3NTI3Mzk2ODY4NjkwMDk2MjI1MTk0MzQ5NjIyNzAzOSIsIjAiLCIxIiwiMSIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCJdLCJpZCI6MSwiY2lyY3VpdElkIjoiY3JlZGVudGlhbEF0b21pY1F1ZXJ5U2lnVjIifV19LCJmcm9tIjoiZGlkOnBvbHlnb25pZDpwb2x5Z29uOm11bWJhaToycUYxYnBLWjhSMk1WVnE5R3dRUkI1NEoxcVNabmVTR0d6bThHaEZrNkciLCJ0byI6ImRpZDpwb2x5Z29uaWQ6cG9seWdvbjptdW1iYWk6MnFIN1RzdHBSUkpIWE5ONG80OUZ1OUgyUWlzbWt1OGhRZVV4RFZyanFUIn0.eyJwcm9vZiI6eyJwaV9hIjpbIjE2MDY2Mzc4ODgyMjA4MTkzMjg3MDkzNzQxMjE3MDUyMjU0NzkxODgwMTg2MzE0MjMxMTU5MDI2MTczMzI5OTkzODczMDk1MTA0NzgwIiwiMTkyOTI4MjgwMzI5MzcyNzczOTk5MDU2OTY4MDAzMzA3NDY3MzAzMTYyOTMyNDU0NzY2NjA2NTk0Mjc1NTU5NzczMjY4OTU1MzI1MTgiLCIxIl0sInBpX2IiOltbIjE2MTE2ODY0NTc2MDg5NDQ5NzY4NDI5MDg5NjE5ODEyODk4NDQ0ODQwMDMwMTE1MjU5NjEwNzE5MTc1Nzc0MTIxNDEyMTM2NTI0OTQ2IiwiNzY4MzYzMzc3MjY2MjY3OTM0NjM3Nzc0NzYxNzU5NDg0MjgzOTM4OTI2MDUzMzcyNDQ4NDQzMTY5MDkzOTM1OTQxMjc5ODI4MTU0Il0sWyIxODY4NzQ3ODU2Mzk4OTQ2NjMzMDUwNjQyMjc3Nzc1MTM4NTY5NTY4MDk4NjMyNjY4NjEwMTY5NjQ5MDY4MDg3NTgzNTIyMTk0NjU0NiIsIjEwMzY1MjMwNDIxOTAxNTI3NDgwMzM0MTUwMTMyMDk5NzI0MTc2NDMxNDg2NTcyNzExMDI4NTQ3MDAyMzQ4NzQ0MTUwNDI4Nzc2OTY4Il0sWyIxIiwiMCJdXSwicGlfYyI6WyIyMTE4NDU4NDU3NTM2NTQ2MDIzMjY0ODc4NTk5Nzg1MzQ1Mjc4Njg5MzEzNDY5MTU3MzI3Nzc4MDI2NzU3NzQ0MDcxMTgyODgzNzYyNSIsIjYzNjY5NjgxOTQ1OTAzNTk3Mjc5ODczMTYxNjU5MTUyMjEzMTU5MTAxNzI2NDM1ODcwMzc4MDc3NzY2MTUyNjk1ODgxMjkyMTUwNjMiLCIxIl0sInByb3RvY29sIjoiZ3JvdGgxNiIsImN1cnZlIjoiYm4xMjgifSwicHViX3NpZ25hbHMiOlsiMjQ1MTc1NTUyNzkwMjgzNTMwNTExNzgxNTc0NjAzOTk5MzE5OTQzMzk3NTU4NTY2ODk5ODk2MjMxNTczOTUyODYxNzQyMDg1MTQiLCIxNjA3MjY1NzAyMjIxODcxMTM3NjYzNTEzNDg3NjkxNzUyODAzOTk3OTA1MjA0NTI4MjIzNDE0MjA4ODMyOTgyNjIxNzUwNDE0MDQzNSIsIjQyMTc4MjI2NjU0MzM4MDcyMjg1MjY0NjU4MTE4MTU3Nzk1OTk3ODczMTc3Mzk1NTYxODc2Nzg1ODkxNjM3ODI4ODkzMjQ2MTU5ODQiXX0\",\n  \"jwzMetadata\": {\n    \"userDID\": \"did:polygonid:polygon:amoy:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT\",\n    \"verifiablePresentations\": [\n      {\n        \"proofType\": \"VerifiablePresentation\",\n        \"schemaContext\": [\n          \"https://www.w3.org/2018/credentials/v1\",\n          \"https://www.w3.org/2018/credentials/v1\"\n        ],\n        \"schemaType\": [\n          \"KYCAgeCredential\",\n          \"KYCAgeCredential\"\n        ],\n        \"credentialSubject\": {}\n      },\n      {\n        \"proofType\": \"VerifiablePresentation\",\n        \"schemaContext\": [\n          \"https://www.w3.org/2018/credentials/v1\",\n          \"https://www.w3.org/2018/credentials/v1\"\n        ],\n        \"schemaType\": [\n          \"KYCAgeCredential\",\n          \"KYCAgeCredential\"\n        ],\n        \"credentialSubject\": {}\n      }\n    ],\n    \"nullifiers\": [\n      {\n        \"scopeID\": 1,\n        \"nullifier\": \"1234\",\n        \"nullifierSessionID\": \"123443290439234342342423423423423\"\n      },\n      {\n        \"scopeID\": 1,\n        \"nullifier\": \"1234\",\n        \"nullifierSessionID\": \"123443290439234342342423423423423\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b51afcf-4d11-498a-b935-80a0680f4109",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sessionID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e831e3c-d319-401b-9c4e-78726c09d262",
+              "name": "Internal Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sessionID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "60547e03-ff9d-4843-9e54-6dd560718aca",
+          "name": "Get QRCode from store",
+          "request": {
+            "name": "Get QRCode from store",
+            "description": {},
+            "url": {
+              "path": [
+                "qr-store"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c49f0e97-6eb6-4ef4-a7c4-ade126e05865",
+              "name": "QR Code Indirection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qr-store"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"6dc645a6-2be3-4099-a645-20784ee53cd0\",\n  \"typ\": \"application/iden3comm-plain-json\",\n  \"type\": \"https://iden3-communication.io/authorization/1.0/request\",\n  \"thid\": \"6dc645a6-2be3-4099-a645-20784ee53cd0\",\n  \"body\": {\n    \"reason\": \"test flow\",\n    \"scope\": [\n      {\n        \"id\": 1,\n        \"circuitId\": \"credentialAtomicQuerySigV2\",\n        \"query\": {\n          \"context\": \"https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld\",\n          \"allowedIssuers\": [\n            \"*\"\n          ],\n          \"type\": \"KYCAgeCredential\",\n          \"credentialSubject\": {\n            \"birthday\": {\n              \"$lt\": 20200424\n            }\n          }\n        },\n        \"params\": {\n          \"nullifierSessionID\": \"123443290439234342342423423423423\"\n        }\n      },\n      {\n        \"id\": 1,\n        \"circuitId\": \"credentialAtomicQuerySigV2\",\n        \"query\": {\n          \"context\": \"https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld\",\n          \"allowedIssuers\": [\n            \"*\"\n          ],\n          \"type\": \"KYCAgeCredential\",\n          \"credentialSubject\": {\n            \"birthday\": {\n              \"$lt\": 20200424\n            }\n          }\n        },\n        \"params\": {\n          \"nullifierSessionID\": \"123443290439234342342423423423423\"\n        }\n      }\n    ],\n    \"transaction_data\": {\n      \"contract_address\": \"0x2b23e5cF70D133fFaA7D8ba61E1bAC4637253880 \",\n      \"method_id\": \"b68967e2\",\n      \"chain_id\": 80002,\n      \"network\": \"polygon-amoy\"\n    },\n    \"callbackUrl\": \"https://verifier-backend/callback?sessionId=6dc645a6-2be3-4099-a645-20784ee53cd0\"\n  },\n  \"from\": \"did:polygonid:polygon:amoy:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT\",\n  \"to\": \"did:polygonid:polygon:amoy:2qEATqfECVbCBzq9EhJpPSiv1xtJRpbMBKDaNM68Ci\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae5db5d1-dc27-459d-a9d1-27df59c2eef4",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qr-store"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f0c6300-4ad7-435a-9b1f-02dc241c5f30",
+              "name": "Internal Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qr-store"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Something happen\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b73a5712-6f3b-48fc-90f0-f3d6542e893e",
+    "name": "Privado ID - Issuer Agent Public API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Issuer Node Core API is ideal for users who need multiple identities and for integrator profiles, who want to \ncreate solutions based on Privado ID functionalities and might be interested in having access to low level \ninformation such as Merkle Trees.\nThe Issuer Node API provide the following functionalities:\n* Create and retrieve Identities\n* Create a Verifiable Credential (VC)\n* Retrieve a Verifiable Credential or a list of Verifiable Credentials\n* Generate JSON to create a QR Code and use that to accept credentials in a wallet\n* Revoke a Verifiable Credential\n* Check revocation status of a Verifiable Credential\n* Retrieve the Revocation Status of a Verifiable Credential\n* Call Agent Endpoint using the Wallet App\n* Handle connections.\n",
+      "type": "text/plain"
+    }
+  }
+}

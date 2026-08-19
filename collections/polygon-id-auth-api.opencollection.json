@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privado ID - Issuer Agent Auth API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Authentication Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/authentication/sessions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6\n"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "get authentication connection"
+        },
+        {
+          "info": {
+            "name": "Get Authentication Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/:identifier/authentication",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Issuer identifier"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type:\n  * `link` - (default value) Return a link redirection to the raw content. Easier to scan.   \n  * `raw` - Return the raw QR code.\n"
+              }
+            ]
+          },
+          "docs": "This endpoint returns an authentication message"
+        },
+        {
+          "info": {
+            "name": "Authentication Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/authentication/callback",
+            "params": [
+              {
+                "name": "sessionID",
+                "value": "",
+                "type": "query",
+                "description": "Session ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd\n"
+              }
+            ]
+          },
+          "docs": "This endpoint is called when the QR code is scanned and the user is authenticated. A connection is created."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

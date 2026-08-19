@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privado ID - Issuer Agent Public API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Public",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Sign in",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sign-in",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint returns a QR Code and a Session ID. \nThe QR Code can be used to produce a QR Code to be scanned with the PID to perform the verification.\nSessionID can be used to pool the status of the verification with the /status endpoint.\n\nThe scope is an array of objects that contains the information of the verification to be performed.\nMultiple verifications can be performed in a single request and from different credentials.\n\nIn order to create your custom queries visit our [query builder](h"
+        },
+        {
+          "info": {
+            "name": "Get Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/status",
+            "params": [
+              {
+                "name": "sessionID",
+                "value": "",
+                "type": "query",
+                "description": "ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd\n"
+              }
+            ]
+          },
+          "docs": "Get Status"
+        },
+        {
+          "info": {
+            "name": "Get QRCode from store",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/qr-store",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd\n"
+              }
+            ]
+          },
+          "docs": "Get QRCode from store"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
