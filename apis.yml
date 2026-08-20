@@ -103,6 +103,13 @@ apis:
   - Mobile SDK
   - Android
   - iOS
+  - Wallets
+  - ZK Proofs
+  tags_raw:
+  - Flutter
+  - Mobile SDK
+  - Android
+  - iOS
   - Wallet
   - ZK Proofs
   properties:
@@ -121,6 +128,8 @@ apis:
   humanURL: https://docs.privado.id/docs/issuer-node/issuer-node-api/introduction/
   baseURL: https://issuer-node-core-api-testing.privado.id
   tags:
+  - Agents
+  tags_raw:
   - Agent
   properties:
   - type: OpenAPI
@@ -143,6 +152,8 @@ apis:
   humanURL: https://docs.privado.id/docs/issuer-node/issuer-node-api/introduction/
   baseURL: https://issuer-node-core-api-testing.privado.id
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
