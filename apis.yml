@@ -64,6 +64,14 @@ apis:
   - Authentication
   - On-chain Verification
   - Off-chain Verification
+  - QR Codes
+  - Smart Contracts
+  tags_raw:
+  - Verification
+  - Zero-Knowledge Proofs
+  - Authentication
+  - On-chain Verification
+  - Off-chain Verification
   - QR Code
   - Smart Contracts
   properties:
@@ -366,6 +374,8 @@ apis:
   humanURL: https://docs.privado.id/docs/issuer-node/issuer-node-api/introduction/
   baseURL: https://issuer-node-core-api-testing.privado.id
   tags:
+  - Payments
+  tags_raw:
   - Payment
   properties:
   - type: OpenAPI
@@ -432,6 +442,8 @@ apis:
   humanURL: https://docs.privado.id/docs/issuer-node/issuer-node-api/introduction/
   baseURL: https://issuer-node-core-api-testing.privado.id
   tags:
+  - Schema
+  tags_raw:
   - Schemas
   properties:
   - type: OpenAPI
