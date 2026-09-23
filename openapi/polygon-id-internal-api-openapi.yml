@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Privado ID - Issuer Agent Internal API
-  description: "The Issuer Node Core API is ideal for users who need multiple identities and for integrator profiles, who want to \ncreate solutions based on Privado ID functionalities and might be interested in having access to low level \ninformation such as Merkle Trees.\nThe Issuer Node API provide the following functionalities:\n* Create and retrieve Identities\n* Create a Verifiable Credential (VC)\n* Retrieve a Verifiable Credential or a list of Verifiable Credentials\n* Generate JSON to create a QR Code and use that to accept credentials in a wallet\n* Revoke a Verifiable Credential\n* Check revocation status of a Verifiable Credential\n* Retrieve the Revocation Status of a Verifiable Credential\n* Call Agent Endpoint using the Wallet App\n* Handle connections.\n"
+  title: Privado ID Internal API
+  description: Documentation for the Backend Verifier API
   version: '1'
 tags:
 - name: Internal
@@ -60,6 +60,20 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
+  parameters:
+    sessionID:
+      name: sessionID
+      in: query
+      required: true
+      description: 'ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd
+
+        '
+      schema:
+        type: string
+        x-go-type: uuid.UUID
+        x-go-type-import:
+          name: uuid
+          path: github.com/google/uuid
   schemas:
     GenericErrorMessage:
       type: object
@@ -76,20 +90,6 @@ components:
         healthy: true
     CallbackResponse:
       type: object
-  parameters:
-    sessionID:
-      name: sessionID
-      in: query
-      required: true
-      description: 'ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd
-
-        '
-      schema:
-        type: string
-        x-go-type: uuid.UUID
-        x-go-type-import:
-          name: uuid
-          path: github.com/google/uuid
   responses:
     '404':
       description: Not Found
@@ -103,7 +103,3 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GenericErrorMessage'
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic

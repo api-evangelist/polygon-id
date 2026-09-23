@@ -1,20 +1,8 @@
 {
   "provider": "polygon-id",
   "sources": [
-    "polygon-id-agent-api-openapi.yml",
-    "polygon-id-auth-api-openapi.yml",
-    "polygon-id-config-api-openapi.yml",
-    "polygon-id-connection-api-openapi.yml",
-    "polygon-id-credentials-api-openapi.yml",
-    "polygon-id-display-methods-api-openapi.yml",
-    "polygon-id-identity-api-openapi.yml",
-    "polygon-id-internal-api-openapi.yml",
-    "polygon-id-key-management-api-openapi.yml",
-    "polygon-id-links-api-openapi.yml",
-    "polygon-id-payment-api-openapi.yml",
-    "polygon-id-public-api-openapi.yml",
-    "polygon-id-qr-store-api-openapi.yml",
-    "polygon-id-schemas-api-openapi.yml"
+    "_original/issuer-node-api.yaml",
+    "_original/verifier-backend-api.yaml"
   ],
   "outputs": [
     "polygon-id-agent-api-openapi.yml",
@@ -24,17 +12,45 @@
     "polygon-id-credentials-api-openapi.yml",
     "polygon-id-display-methods-api-openapi.yml",
     "polygon-id-identity-api-openapi.yml",
-    "polygon-id-internal-api-openapi.yml",
     "polygon-id-key-management-api-openapi.yml",
     "polygon-id-links-api-openapi.yml",
     "polygon-id-payment-api-openapi.yml",
-    "polygon-id-public-api-openapi.yml",
     "polygon-id-qr-store-api-openapi.yml",
-    "polygon-id-schemas-api-openapi.yml"
+    "polygon-id-schemas-api-openapi.yml",
+    "polygon-id-internal-api-openapi.yml",
+    "polygon-id-public-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "issuer-node-api.yaml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "issuer-node-api.yaml: declared missing tag: Auth",
+    "issuer-node-api.yaml: declared missing tag: Config",
+    "issuer-node-api.yaml: declared missing tag: Connection",
+    "issuer-node-api.yaml: declared missing tag: Display Methods",
+    "issuer-node-api.yaml: declared missing tag: Links",
+    "issuer-node-api.yaml: declared missing tag: Payment",
+    "issuer-node-api.yaml: declared missing tag: QR Store",
+    "issuer-node-api.yaml: declared missing tag: Schemas",
+    "verifier-backend-api.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "polygon-id-agent-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-config-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-connection-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-credentials-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-display-methods-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-identity-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-internal-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-key-management-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-links-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-payment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-public-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-qr-store-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "polygon-id-schemas-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,7 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Privado ID - Issuer Agent Key Management API
-  description: "The Issuer Node Core API is ideal for users who need multiple identities and for integrator profiles, who want to \ncreate solutions based on Privado ID functionalities and might be interested in having access to low level \ninformation such as Merkle Trees.\nThe Issuer Node API provide the following functionalities:\n* Create and retrieve Identities\n* Create a Verifiable Credential (VC)\n* Retrieve a Verifiable Credential or a list of Verifiable Credentials\n* Generate JSON to create a QR Code and use that to accept credentials in a wallet\n* Revoke a Verifiable Credential\n* Check revocation status of a Verifiable Credential\n* Retrieve the Revocation Status of a Verifiable Credential\n* Call Agent Endpoint using the Wallet App\n* Handle connections.\n"
+  title: Privado ID - Issuer Key Management API
+  description: 'The Issuer Node Core API is ideal for users who need multiple identities and for integrator profiles, who want to
+
+    create solutions based on Privado ID functionalities and might be interested in having access to low level
+
+    information such as Merkle Trees.'
   version: '1'
 tags:
 - name: Key Management
@@ -13,9 +17,7 @@ paths:
       operationId: CreateAuthCredential
       description: 'Endpoint to create a new Auth Credential
 
-        * keyID - only babyjubjub keys supported
-
-        '
+        * keyID - only babyjubjub keys supported'
       security:
       - basicAuth: []
       parameters:
@@ -84,9 +86,7 @@ paths:
     get:
       summary: Get Keys
       operationId: GetKeys
-      description: 'Returns a list of Keys for the provided identity.
-
-        '
+      description: Returns a list of Keys for the provided identity.
       security:
       - basicAuth: []
       tags:
@@ -210,14 +210,13 @@ components:
           x-omitempty: false
           description: base64 encoded keyID
           example: a2V5cy9kaWQ6aWRlbjM6cG9seWdvbjphbW95OnhKQktvbkJ1dWdKbW1aMkdvS2gzOTM
-    GenericErrorMessage:
+    GenericMessage:
       type: object
       required:
       - message
       properties:
         message:
           type: string
-          example: Something happen
     PaginatedMetadata:
       type: object
       required:
@@ -237,6 +236,18 @@ components:
           type: integer
           format: uint
           example: 50
+    KeysPaginated:
+      type: object
+      required:
+      - items
+      - meta
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Key'
+        meta:
+          $ref: '#/components/schemas/PaginatedMetadata'
     Key:
       type: object
       required:
@@ -271,25 +282,31 @@ components:
           type: string
           x-omitempty: false
           example: my key
-    KeysPaginated:
+    CreateKeyRequest:
       type: object
       required:
-      - items
-      - meta
+      - keyType
+      - name
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Key'
-        meta:
-          $ref: '#/components/schemas/PaginatedMetadata'
-    GenericMessage:
+        keyType:
+          type: string
+          x-omitempty: false
+          example: babyjubJub
+          enum:
+          - babyjubJub
+          - secp256k1
+          - ed25519
+        name:
+          type: string
+          example: my key
+    GenericErrorMessage:
       type: object
       required:
       - message
       properties:
         message:
           type: string
+          example: Something happen
     CreateAuthCredentialRequest:
       type: object
       required:
@@ -317,31 +334,7 @@ components:
           - Iden3commRevocationStatusV1.0
           - Iden3ReverseSparseMerkleTreeProof
           - Iden3OnchainSparseMerkleTreeProof2023
-    CreateKeyRequest:
-      type: object
-      required:
-      - keyType
-      - name
-      properties:
-        keyType:
-          type: string
-          x-omitempty: false
-          example: babyjubJub
-          enum:
-          - babyjubJub
-          - secp256k1
-          - ed25519
-        name:
-          type: string
-          example: my key
   parameters:
-    pathKeyID:
-      name: id
-      in: path
-      required: true
-      description: Key ID in base64
-      schema:
-        type: string
     pathIdentifier2:
       name: identifier
       in: path
@@ -353,9 +346,22 @@ components:
         x-go-type-import:
           name: customIdentity
           path: github.com/polygonid/sh-id-platform/internal/api
+    pathKeyID:
+      name: id
+      in: path
+      required: true
+      description: Key ID in base64
+      schema:
+        type: string
   responses:
     '400':
       description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '401':
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -368,12 +374,6 @@ components:
             $ref: '#/components/schemas/GenericErrorMessage'
     '500':
       description: Internal Server  error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '401':
-      description: Unauthorized
       content:
         application/json:
           schema:
