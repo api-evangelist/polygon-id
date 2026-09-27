@@ -48,6 +48,12 @@ paths:
           $ref: '#/components/responses/500'
 components:
   responses:
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
     '400':
       description: Bad Request
       content:
@@ -62,12 +68,6 @@ components:
             $ref: '#/components/schemas/GenericErrorMessage'
     '404':
       description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '500':
-      description: Internal Server  error
       content:
         application/json:
           schema:

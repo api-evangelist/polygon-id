@@ -52,6 +52,31 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
+  responses:
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
   schemas:
     NetworkData:
       type: object
@@ -75,11 +100,6 @@ components:
         message:
           type: string
           example: Something happen
-    Health:
-      type: object
-      x-omitempty: false
-      additionalProperties:
-        type: boolean
     SupportedNetworks:
       type: object
       x-omitempty: false
@@ -94,31 +114,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/NetworkData'
-  responses:
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '500':
-      description: Internal Server  error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
+    Health:
+      type: object
+      x-omitempty: false
+      additionalProperties:
+        type: boolean
   securitySchemes:
     basicAuth:
       type: http

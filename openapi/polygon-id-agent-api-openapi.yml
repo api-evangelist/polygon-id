@@ -63,30 +63,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
-  responses:
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '500':
-      description: Internal Server  error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
   schemas:
-    AgentResponse:
-      $ref: '#/components/schemas/BasicMessage'
-    GenericErrorMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          example: Something happen
     BasicMessage:
       type: object
       required:
@@ -112,6 +89,29 @@ components:
           type: string
         to:
           type: string
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    AgentResponse:
+      $ref: '#/components/schemas/BasicMessage'
+  responses:
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
   securitySchemes:
     basicAuth:
       type: http

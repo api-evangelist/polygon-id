@@ -1,16 +1,22 @@
 name: Polygon ID
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - 0xpolygonid/issuer-node
+    - 0xpolygonid/js-sdk
+    - 0xpolygonid/polygonid-flutter-sdk
+    - 0xpolygonid/verifier-backend
   open_source: unknown
   commercial: true
-  callable_host: true
-  label: Delivery model not determined — needs a product licence on record
+  callable_host: false
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - openapi
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium

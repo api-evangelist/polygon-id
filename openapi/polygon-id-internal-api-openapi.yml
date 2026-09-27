@@ -60,6 +60,35 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
+  responses:
+    '500':
+      description: Internal Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+  schemas:
+    CallbackResponse:
+      type: object
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    Health:
+      type: object
+      x-omitempty: false
+      example:
+        healthy: true
   parameters:
     sessionID:
       name: sessionID
@@ -74,32 +103,3 @@ components:
         x-go-type-import:
           name: uuid
           path: github.com/google/uuid
-  schemas:
-    GenericErrorMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          example: Something happen
-    Health:
-      type: object
-      x-omitempty: false
-      example:
-        healthy: true
-    CallbackResponse:
-      type: object
-  responses:
-    '404':
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '500':
-      description: Internal Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'

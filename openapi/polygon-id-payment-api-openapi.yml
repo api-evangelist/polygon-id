@@ -320,28 +320,13 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
-  parameters:
-    pathIdentifier:
-      name: identifier
-      in: path
-      required: true
-      description: Issuer identifier
-      schema:
-        type: string
-    id:
-      name: id
-      in: path
-      required: true
-      description: 'UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6
-
-        '
-      schema:
-        type: string
-        x-go-type: uuid.UUID
-        x-go-type-import:
-          name: uuid
-          path: github.com/google/uuid
   schemas:
+    PaymentsConfiguration:
+      type: object
+      x-go-type: payments.Config
+      x-go-type-import:
+        name: payments
+        path: github.com/polygonid/sh-id-platform/internal/payments
     GenericErrorMessage:
       type: object
       required:
@@ -350,6 +335,141 @@ components:
         message:
           type: string
           example: Something happen
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    PaymentOptions:
+      type: array
+      items:
+        $ref: '#/components/schemas/PaymentOption'
+    CreatePaymentRequest:
+      type: object
+      required:
+      - optionID
+      - schemaID
+      - description
+      - userDID
+      properties:
+        optionID:
+          type: string
+          x-go-type: uuid.UUID
+          x-go-type-import:
+            name: uuid
+            path: github.com/google/uuid
+        schemaID:
+          type: string
+          x-go-type: uuid.UUID
+          x-go-type-import:
+            name: uuid
+            path: github.com/google/uuid
+        description:
+          type: string
+          example: Payment for AML
+        userDID:
+          type: string
+          example: <user did>
+    GetPaymentRequestsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/CreatePaymentRequestResponse'
+    PaymentRequestInfo:
+      type: object
+      x-go-type: protocol.PaymentRequestInfo
+      x-go-type-import:
+        name: protocol
+        path: github.com/iden3/iden3comm/v2/protocol
+    UUIDResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
+    PaginatedMetadata:
+      type: object
+      required:
+      - total
+      - page
+      - max_results
+      properties:
+        total:
+          type: integer
+          format: uint
+          example: 1
+        page:
+          type: integer
+          format: uint
+          example: 1
+        max_results:
+          type: integer
+          format: uint
+          example: 50
+    TimeUTC:
+      type: string
+      x-go-type: timeapi.Time
+      x-go-type-import:
+        name: timeapi
+        path: github.com/polygonid/sh-id-platform/internal/timeapi
+      example: '2023-10-26T10:59:08Z'
+      x-omitempty: false
+    PaymentOptionConfig:
+      type: array
+      items:
+        $ref: '#/components/schemas/PaymentOptionConfigItem'
+    PaymentOption:
+      type: object
+      required:
+      - id
+      - issuerDID
+      - name
+      - description
+      - paymentOptions
+      - modifiedAt
+      - createdAt
+      properties:
+        id:
+          type: string
+          x-go-type: uuid.UUID
+          x-go-type-import:
+            name: uuid
+            path: github.com/google/uuid
+        issuerDID:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        paymentOptions:
+          $ref: '#/components/schemas/PaymentOptionConfig'
+        modifiedAt:
+          $ref: '#/components/schemas/TimeUTC'
+        createdAt:
+          $ref: '#/components/schemas/TimeUTC'
+    UpdatePaymentOptionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        paymentOptions:
+          $ref: '#/components/schemas/PaymentOptionConfig'
+    PaymentOptionsPaginated:
+      type: object
+      required:
+      - items
+      - meta
+      properties:
+        items:
+          $ref: '#/components/schemas/PaymentOptions'
+        meta:
+          $ref: '#/components/schemas/PaginatedMetadata'
     PaymentVerifyRequest:
       type: object
       properties:
@@ -361,33 +481,57 @@ components:
           type: string
           example: did:iden3:polygon:amoy:2qVSDLNYs2s5HDMTyb4Su67ZvrZ...
           description: If a User DID is provided, the payment will be verified for the specified User DID.
-    PaymentRequestInfo:
-      type: object
-      x-go-type: protocol.PaymentRequestInfo
-      x-go-type-import:
-        name: protocol
-        path: github.com/iden3/iden3comm/v2/protocol
-    GetPaymentRequestsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/CreatePaymentRequestResponse'
-    PaymentOptionsPaginated:
+    PaymentStatus:
       type: object
       required:
-      - items
-      - meta
+      - status
+      - requestId
       properties:
-        items:
-          $ref: '#/components/schemas/PaymentOptions'
-        meta:
-          $ref: '#/components/schemas/PaginatedMetadata'
-    GenericMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
+        status:
           type: string
+          enum:
+          - success
+          - failed
+          - pending
+          - canceled
+        requestId:
+          type: string
+    PaymentOptionRequest:
+      type: object
+      required:
+      - name
+      - description
+      - paymentOptions
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        paymentOptions:
+          $ref: '#/components/schemas/PaymentOptionConfig'
+    PaymentOptionConfigItem:
+      type: object
+      required:
+      - paymentOptionID
+      - amount
+      - recipient
+      - signingKeyID
+      properties:
+        paymentOptionID:
+          type: integer
+        amount:
+          type: string
+        recipient:
+          type: string
+        signingKeyID:
+          type: string
+          description: base64 encoded keyID
+        expiration:
+          type: string
+          format: date-time
+          example: 2025-04-17 11:40:43.681857-03:00
+          x-omitempty: true
+          description: Expiration date for the payment option, if not set the 1 hour from the creation date will be used
     CreatePaymentRequestResponse:
       type: object
       required:
@@ -433,186 +577,36 @@ components:
         schemaID:
           type: string
           format: uuid
-    UUIDResponse:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-omitempty: false
-          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
-    UpdatePaymentOptionRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        paymentOptions:
-          $ref: '#/components/schemas/PaymentOptionConfig'
-    PaymentOptions:
-      type: array
-      items:
-        $ref: '#/components/schemas/PaymentOption'
-    CreatePaymentRequest:
-      type: object
-      required:
-      - optionID
-      - schemaID
-      - description
-      - userDID
-      properties:
-        optionID:
-          type: string
-          x-go-type: uuid.UUID
-          x-go-type-import:
-            name: uuid
-            path: github.com/google/uuid
-        schemaID:
-          type: string
-          x-go-type: uuid.UUID
-          x-go-type-import:
-            name: uuid
-            path: github.com/google/uuid
-        description:
-          type: string
-          example: Payment for AML
-        userDID:
-          type: string
-          example: <user did>
-    PaymentStatus:
-      type: object
-      required:
-      - status
-      - requestId
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - failed
-          - pending
-          - canceled
-        requestId:
-          type: string
-    PaymentOptionConfig:
-      type: array
-      items:
-        $ref: '#/components/schemas/PaymentOptionConfigItem'
-    PaymentOptionRequest:
-      type: object
-      required:
-      - name
-      - description
-      - paymentOptions
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        paymentOptions:
-          $ref: '#/components/schemas/PaymentOptionConfig'
-    PaginatedMetadata:
-      type: object
-      required:
-      - total
-      - page
-      - max_results
-      properties:
-        total:
-          type: integer
-          format: uint
-          example: 1
-        page:
-          type: integer
-          format: uint
-          example: 1
-        max_results:
-          type: integer
-          format: uint
-          example: 50
-    PaymentOption:
-      type: object
-      required:
-      - id
-      - issuerDID
-      - name
-      - description
-      - paymentOptions
-      - modifiedAt
-      - createdAt
-      properties:
-        id:
-          type: string
-          x-go-type: uuid.UUID
-          x-go-type-import:
-            name: uuid
-            path: github.com/google/uuid
-        issuerDID:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        paymentOptions:
-          $ref: '#/components/schemas/PaymentOptionConfig'
-        modifiedAt:
-          $ref: '#/components/schemas/TimeUTC'
-        createdAt:
-          $ref: '#/components/schemas/TimeUTC'
-    TimeUTC:
-      type: string
-      x-go-type: timeapi.Time
-      x-go-type-import:
-        name: timeapi
-        path: github.com/polygonid/sh-id-platform/internal/timeapi
-      example: '2023-10-26T10:59:08Z'
-      x-omitempty: false
-    PaymentOptionConfigItem:
-      type: object
-      required:
-      - paymentOptionID
-      - amount
-      - recipient
-      - signingKeyID
-      properties:
-        paymentOptionID:
-          type: integer
-        amount:
-          type: string
-        recipient:
-          type: string
-        signingKeyID:
-          type: string
-          description: base64 encoded keyID
-        expiration:
-          type: string
-          format: date-time
-          example: 2025-04-17 11:40:43.681857-03:00
-          x-omitempty: true
-          description: Expiration date for the payment option, if not set the 1 hour from the creation date will be used
-    PaymentsConfiguration:
-      type: object
-      x-go-type: payments.Config
-      x-go-type-import:
-        name: payments
-        path: github.com/polygonid/sh-id-platform/internal/payments
+  parameters:
+    pathIdentifier:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: 'UUID parameter, e.g: 8edd8112-c415-11ed-b036-debe37e1cbd6
+
+        '
+      schema:
+        type: string
+        x-go-type: uuid.UUID
+        x-go-type-import:
+          name: uuid
+          path: github.com/google/uuid
   responses:
-    '404':
-      description: Not found
+    '401':
+      description: Unauthorized
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/GenericErrorMessage'
     '400':
       description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '401':
-      description: Unauthorized
       content:
         application/json:
           schema:
@@ -625,6 +619,12 @@ components:
             $ref: '#/components/schemas/GenericErrorMessage'
     '500':
       description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not found
       content:
         application/json:
           schema:
