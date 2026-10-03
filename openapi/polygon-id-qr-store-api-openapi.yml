@@ -47,6 +47,15 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
+  schemas:
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
   responses:
     '500':
       description: Internal Server  error
@@ -60,27 +69,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GenericErrorMessage'
-    '410':
-      description: Gone
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
     '404':
       description: Not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/GenericErrorMessage'
-  schemas:
-    GenericErrorMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          example: Something happen
+    '410':
+      description: Gone
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
   securitySchemes:
     basicAuth:
       type: http

@@ -353,6 +353,13 @@ paths:
           $ref: '#/components/responses/500'
 components:
   schemas:
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
     GenericErrorMessage:
       type: object
       required:
@@ -361,21 +368,42 @@ components:
         message:
           type: string
           example: Something happen
-    GenericMessage:
+    GetIdentityDetailsResponse:
       type: object
       required:
-      - message
+      - identifier
+      - state
+      - status
+      - keyType
+      - credentialStatusType
+      - authCredentialsIDs
       properties:
-        message:
+        identifier:
           type: string
-    StateStatusResponse:
-      type: object
-      required:
-      - pendingActions
-      properties:
-        pendingActions:
-          type: boolean
-          example: true
+        displayName:
+          x-omitempty: false
+          type: string
+        state:
+          $ref: '#/components/schemas/IdentityState'
+        address:
+          type: string
+          x-omitempty: true
+        balance:
+          type: string
+          x-omitempty: true
+        keyType:
+          type: string
+        credentialStatusType:
+          type: string
+          example: Iden3ReverseSparseMerkleTreeProof
+          enum:
+          - Iden3commRevocationStatusV1.0
+          - Iden3ReverseSparseMerkleTreeProof
+          - Iden3OnchainSparseMerkleTreeProof2023
+        authCredentialsIDs:
+          type: array
+          items:
+            type: string
     IdentityState:
       type: object
       required:
@@ -414,20 +442,17 @@ components:
           $ref: '#/components/schemas/TimeUTC'
         createdAt:
           $ref: '#/components/schemas/TimeUTC'
-    GetIdentityDetailsResponse:
+    CreateIdentityResponse:
       type: object
       required:
-      - identifier
-      - state
+      - identity
       - status
       - keyType
       - credentialStatusType
-      - authCredentialsIDs
       properties:
         identifier:
           type: string
         displayName:
-          x-omitempty: false
           type: string
         state:
           $ref: '#/components/schemas/IdentityState'
@@ -446,117 +471,6 @@ components:
           - Iden3commRevocationStatusV1.0
           - Iden3ReverseSparseMerkleTreeProof
           - Iden3OnchainSparseMerkleTreeProof2023
-        authCredentialsIDs:
-          type: array
-          items:
-            type: string
-    PaginatedMetadata:
-      type: object
-      required:
-      - total
-      - page
-      - max_results
-      properties:
-        total:
-          type: integer
-          format: uint
-          example: 1
-        page:
-          type: integer
-          format: uint
-          example: 1
-        max_results:
-          type: integer
-          format: uint
-          example: 50
-    StateTransactions:
-      type: array
-      items:
-        $ref: '#/components/schemas/StateTransaction'
-    PublishIdentityStateResponse:
-      type: object
-      properties:
-        txID:
-          type: string
-        claimsTreeRoot:
-          type: string
-        state:
-          type: string
-        revocationTreeRoot:
-          type: string
-        rootOfRoots:
-          type: string
-    TimeUTC:
-      type: string
-      x-go-type: timeapi.Time
-      x-go-type-import:
-        name: timeapi
-        path: github.com/polygonid/sh-id-platform/internal/timeapi
-      example: '2023-10-26T10:59:08Z'
-      x-omitempty: false
-    CreateAuthCredentialRequest:
-      type: object
-      required:
-      - keyID
-      - credentialStatusType
-      properties:
-        keyID:
-          type: string
-          x-omitempty: false
-          example: ZGlkOnBvbHlnb25pZDpwb2x5Z29uOmFtb3k6MnFRNjhKa1JjZjN5cXBYanRqVVQ3WjdVeW1TV0hzYll
-        expiration:
-          type: integer
-          format: int64
-        version:
-          type: integer
-          format: uint32
-        revNonce:
-          type: integer
-          format: uint64
-        credentialStatusType:
-          type: string
-          x-omitempty: true
-          example: Iden3ReverseSparseMerkleTreeProof
-          enum:
-          - Iden3commRevocationStatusV1.0
-          - Iden3ReverseSparseMerkleTreeProof
-          - Iden3OnchainSparseMerkleTreeProof2023
-    GetIdentitiesResponse:
-      type: object
-      required:
-      - identifier
-      - method
-      - blockchain
-      - network
-      properties:
-        identifier:
-          type: string
-          x-omitempty: false
-          example: did:polygonid:polygon:amoy:2qMZrfBsXuGFTwSqkqYki78zF3pe1vtXoqH4yRLsfs
-        credentialStatusType:
-          type: string
-          x-omitempty: true
-          example: Iden3ReverseSparseMerkleTreeProof
-          enum:
-          - Iden3commRevocationStatusV1.0
-          - Iden3ReverseSparseMerkleTreeProof
-          - Iden3OnchainSparseMerkleTreeProof2023
-        method:
-          type: string
-          x-omitempty: false
-          example: polygonid
-        blockchain:
-          type: string
-          x-omitempty: false
-          example: polygon
-        network:
-          type: string
-          x-omitempty: false
-          example: amoy
-        displayName:
-          type: string
-          x-omitempty: false
-          example: KYCAgeCredential Issuer identity
     CreateIdentityRequest:
       type: object
       required:
@@ -601,35 +515,110 @@ components:
           type: string
           x-omitempty: false
           example: KYCAgeCredential Issuer identity
-    CreateIdentityResponse:
+    CreateAuthCredentialRequest:
       type: object
       required:
-      - identity
-      - status
-      - keyType
+      - keyID
       - credentialStatusType
       properties:
-        identifier:
+        keyID:
           type: string
-        displayName:
-          type: string
-        state:
-          $ref: '#/components/schemas/IdentityState'
-        address:
-          type: string
-          x-omitempty: true
-        balance:
-          type: string
-          x-omitempty: true
-        keyType:
-          type: string
+          x-omitempty: false
+          example: ZGlkOnBvbHlnb25pZDpwb2x5Z29uOmFtb3k6MnFRNjhKa1JjZjN5cXBYanRqVVQ3WjdVeW1TV0hzYll
+        expiration:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: uint32
+        revNonce:
+          type: integer
+          format: uint64
         credentialStatusType:
           type: string
+          x-omitempty: true
           example: Iden3ReverseSparseMerkleTreeProof
           enum:
           - Iden3commRevocationStatusV1.0
           - Iden3ReverseSparseMerkleTreeProof
           - Iden3OnchainSparseMerkleTreeProof2023
+    StateTransactions:
+      type: array
+      items:
+        $ref: '#/components/schemas/StateTransaction'
+    PaginatedMetadata:
+      type: object
+      required:
+      - total
+      - page
+      - max_results
+      properties:
+        total:
+          type: integer
+          format: uint
+          example: 1
+        page:
+          type: integer
+          format: uint
+          example: 1
+        max_results:
+          type: integer
+          format: uint
+          example: 50
+    TimeUTC:
+      type: string
+      x-go-type: timeapi.Time
+      x-go-type-import:
+        name: timeapi
+        path: github.com/polygonid/sh-id-platform/internal/timeapi
+      example: '2023-10-26T10:59:08Z'
+      x-omitempty: false
+    StateTransactionsPaginated:
+      type: object
+      required:
+      - items
+      - meta
+      properties:
+        items:
+          $ref: '#/components/schemas/StateTransactions'
+        meta:
+          $ref: '#/components/schemas/PaginatedMetadata'
+    GetIdentitiesResponse:
+      type: object
+      required:
+      - identifier
+      - method
+      - blockchain
+      - network
+      properties:
+        identifier:
+          type: string
+          x-omitempty: false
+          example: did:polygonid:polygon:amoy:2qMZrfBsXuGFTwSqkqYki78zF3pe1vtXoqH4yRLsfs
+        credentialStatusType:
+          type: string
+          x-omitempty: true
+          example: Iden3ReverseSparseMerkleTreeProof
+          enum:
+          - Iden3commRevocationStatusV1.0
+          - Iden3ReverseSparseMerkleTreeProof
+          - Iden3OnchainSparseMerkleTreeProof2023
+        method:
+          type: string
+          x-omitempty: false
+          example: polygonid
+        blockchain:
+          type: string
+          x-omitempty: false
+          example: polygon
+        network:
+          type: string
+          x-omitempty: false
+          example: amoy
+        displayName:
+          type: string
+          x-omitempty: false
+          example: KYCAgeCredential Issuer identity
     StateTransaction:
       type: object
       required:
@@ -659,57 +648,30 @@ components:
           - published
           - failed
           example: published
-    StateTransactionsPaginated:
+    StateStatusResponse:
       type: object
       required:
-      - items
-      - meta
+      - pendingActions
       properties:
-        items:
-          $ref: '#/components/schemas/StateTransactions'
-        meta:
-          $ref: '#/components/schemas/PaginatedMetadata'
-  parameters:
-    pathIdentifier:
-      name: identifier
-      in: path
-      required: true
-      description: Issuer identifier
-      schema:
-        type: string
-    pathKeyID:
-      name: id
-      in: path
-      required: true
-      description: Key ID in base64
-      schema:
-        type: string
-    pathIdentifier2:
-      name: identifier
-      in: path
-      required: true
-      description: Issuer identifier
-      schema:
-        type: string
-        x-go-type: Identity
-        x-go-type-import:
-          name: customIdentity
-          path: github.com/polygonid/sh-id-platform/internal/api
+        pendingActions:
+          type: boolean
+          example: true
+    PublishIdentityStateResponse:
+      type: object
+      properties:
+        txID:
+          type: string
+        claimsTreeRoot:
+          type: string
+        state:
+          type: string
+        revocationTreeRoot:
+          type: string
+        rootOfRoots:
+          type: string
   responses:
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '403':
-      description: Permission Denied
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '409':
-      description: Conflict
+    '401':
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -720,8 +682,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not found
+    '403':
+      description: Permission Denied
       content:
         application/json:
           schema:
@@ -739,12 +701,50 @@ components:
                 type: integer
               error:
                 type: string
-    '401':
-      description: Unauthorized
+    '404':
+      description: Not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '409':
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+  parameters:
+    pathIdentifier2:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
+        x-go-type: Identity
+        x-go-type-import:
+          name: customIdentity
+          path: github.com/polygonid/sh-id-platform/internal/api
+    pathIdentifier:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
+    pathKeyID:
+      name: id
+      in: path
+      required: true
+      description: Key ID in base64
+      schema:
+        type: string
   securitySchemes:
     basicAuth:
       type: http

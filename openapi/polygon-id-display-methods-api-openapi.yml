@@ -185,26 +185,41 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
-  responses:
-    '500':
-      description: Internal Server  error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
   schemas:
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    PaginatedMetadata:
+      type: object
+      required:
+      - total
+      - page
+      - max_results
+      properties:
+        total:
+          type: integer
+          format: uint
+          example: 1
+        page:
+          type: integer
+          format: uint
+          example: 1
+        max_results:
+          type: integer
+          format: uint
+          example: 50
     DisplayMethodEntity:
       type: object
       required:
@@ -229,42 +244,6 @@ components:
         type:
           type: string
           example: Iden3BasicDisplayMethodV1
-    GenericErrorMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          example: Something happen
-    GenericMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-    UUIDResponse:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-omitempty: false
-          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
-    DisplayMethodPaginated:
-      type: object
-      required:
-      - items
-      - meta
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DisplayMethodEntity'
-        meta:
-          $ref: '#/components/schemas/PaginatedMetadata'
     CreateDisplayMethodRequest:
       type: object
       required:
@@ -281,25 +260,46 @@ components:
           type: string
           example: Iden3BasicDisplayMethodV1
           description: Display method type (Iden3BasicDisplayMethodV1 is default value)
-    PaginatedMetadata:
+    DisplayMethodPaginated:
       type: object
       required:
-      - total
-      - page
-      - max_results
+      - items
+      - meta
       properties:
-        total:
-          type: integer
-          format: uint
-          example: 1
-        page:
-          type: integer
-          format: uint
-          example: 1
-        max_results:
-          type: integer
-          format: uint
-          example: 50
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplayMethodEntity'
+        meta:
+          $ref: '#/components/schemas/PaginatedMetadata'
+    UUIDResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
+  responses:
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
   parameters:
     id:
       name: id

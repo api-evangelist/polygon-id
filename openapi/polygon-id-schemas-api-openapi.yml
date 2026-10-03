@@ -126,60 +126,14 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
-  responses:
-    '500':
-      description: Internal Server  error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
   schemas:
-    TimeUTC:
-      type: string
-      x-go-type: timeapi.Time
-      x-go-type-import:
-        name: timeapi
-        path: github.com/polygonid/sh-id-platform/internal/timeapi
-      example: '2023-10-26T10:59:08Z'
-      x-omitempty: false
-    ImportSchemaRequest:
+    GenericMessage:
       type: object
       required:
-      - url
-      - schemaType
-      - version
+      - message
       properties:
-        url:
+        message:
           type: string
-          example: https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json
-        schemaType:
-          type: string
-          example: vaccinationCertificate
-        title:
-          type: string
-          example: KYC Age Credential
-        description:
-          type: string
-          example: KYC Age Credential description
-        version:
-          type: string
-          example: 1.0.0
-        displayMethodID:
-          type: string
-          x-go-type: uuid.UUID
-          x-omitempty: false
     GenericErrorMessage:
       type: object
       required:
@@ -188,22 +142,6 @@ components:
         message:
           type: string
           example: Something happen
-    GenericMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-    UUIDResponse:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-omitempty: false
-          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
     Schema:
       type: object
       required:
@@ -257,6 +195,68 @@ components:
           type: string
           x-go-type: uuid.UUID
           x-omitempty: false
+    ImportSchemaRequest:
+      type: object
+      required:
+      - url
+      - schemaType
+      - version
+      properties:
+        url:
+          type: string
+          example: https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json
+        schemaType:
+          type: string
+          example: vaccinationCertificate
+        title:
+          type: string
+          example: KYC Age Credential
+        description:
+          type: string
+          example: KYC Age Credential description
+        version:
+          type: string
+          example: 1.0.0
+        displayMethodID:
+          type: string
+          x-go-type: uuid.UUID
+          x-omitempty: false
+    TimeUTC:
+      type: string
+      x-go-type: timeapi.Time
+      x-go-type-import:
+        name: timeapi
+        path: github.com/polygonid/sh-id-platform/internal/timeapi
+      example: '2023-10-26T10:59:08Z'
+      x-omitempty: false
+    UUIDResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
+  responses:
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
   parameters:
     id:
       name: id

@@ -199,32 +199,97 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
-  responses:
-    '500':
-      description: Internal Server  error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '401':
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
   schemas:
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    CreateAuthCredentialRequest:
+      type: object
+      required:
+      - keyID
+      - credentialStatusType
+      properties:
+        keyID:
+          type: string
+          x-omitempty: false
+          example: ZGlkOnBvbHlnb25pZDpwb2x5Z29uOmFtb3k6MnFRNjhKa1JjZjN5cXBYanRqVVQ3WjdVeW1TV0hzYll
+        expiration:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: uint32
+        revNonce:
+          type: integer
+          format: uint64
+        credentialStatusType:
+          type: string
+          x-omitempty: true
+          example: Iden3ReverseSparseMerkleTreeProof
+          enum:
+          - Iden3commRevocationStatusV1.0
+          - Iden3ReverseSparseMerkleTreeProof
+          - Iden3OnchainSparseMerkleTreeProof2023
+    CreateKeyRequest:
+      type: object
+      required:
+      - keyType
+      - name
+      properties:
+        keyType:
+          type: string
+          x-omitempty: false
+          example: babyjubJub
+          enum:
+          - babyjubJub
+          - secp256k1
+          - ed25519
+        name:
+          type: string
+          example: my key
+    KeysPaginated:
+      type: object
+      required:
+      - items
+      - meta
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Key'
+        meta:
+          $ref: '#/components/schemas/PaginatedMetadata'
+    PaginatedMetadata:
+      type: object
+      required:
+      - total
+      - page
+      - max_results
+      properties:
+        total:
+          type: integer
+          format: uint
+          example: 1
+        page:
+          type: integer
+          format: uint
+          example: 1
+        max_results:
+          type: integer
+          format: uint
+          example: 50
     Key:
       type: object
       required:
@@ -259,89 +324,6 @@ components:
           type: string
           x-omitempty: false
           example: my key
-    KeysPaginated:
-      type: object
-      required:
-      - items
-      - meta
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Key'
-        meta:
-          $ref: '#/components/schemas/PaginatedMetadata'
-    CreateKeyRequest:
-      type: object
-      required:
-      - keyType
-      - name
-      properties:
-        keyType:
-          type: string
-          x-omitempty: false
-          example: babyjubJub
-          enum:
-          - babyjubJub
-          - secp256k1
-          - ed25519
-        name:
-          type: string
-          example: my key
-    PaginatedMetadata:
-      type: object
-      required:
-      - total
-      - page
-      - max_results
-      properties:
-        total:
-          type: integer
-          format: uint
-          example: 1
-        page:
-          type: integer
-          format: uint
-          example: 1
-        max_results:
-          type: integer
-          format: uint
-          example: 50
-    CreateAuthCredentialRequest:
-      type: object
-      required:
-      - keyID
-      - credentialStatusType
-      properties:
-        keyID:
-          type: string
-          x-omitempty: false
-          example: ZGlkOnBvbHlnb25pZDpwb2x5Z29uOmFtb3k6MnFRNjhKa1JjZjN5cXBYanRqVVQ3WjdVeW1TV0hzYll
-        expiration:
-          type: integer
-          format: int64
-        version:
-          type: integer
-          format: uint32
-        revNonce:
-          type: integer
-          format: uint64
-        credentialStatusType:
-          type: string
-          x-omitempty: true
-          example: Iden3ReverseSparseMerkleTreeProof
-          enum:
-          - Iden3commRevocationStatusV1.0
-          - Iden3ReverseSparseMerkleTreeProof
-          - Iden3OnchainSparseMerkleTreeProof2023
-    GenericErrorMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          example: Something happen
     CreateKeyResponse:
       type: object
       required:
@@ -352,13 +334,31 @@ components:
           x-omitempty: false
           description: base64 encoded keyID
           example: a2V5cy9kaWQ6aWRlbjM6cG9seWdvbjphbW95OnhKQktvbkJ1dWdKbW1aMkdvS2gzOTM
-    GenericMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
+  responses:
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
   parameters:
     pathIdentifier2:
       name: identifier

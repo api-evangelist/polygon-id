@@ -220,13 +220,21 @@ paths:
           $ref: '#/components/responses/500'
 components:
   schemas:
-    CredentialSubject:
+    GenericMessage:
       type: object
-      x-omitempty: false
-      example:
-        birthday: 19960424
-        documentType: 2
-        type: KYCAgeCredential
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
     CreateLinkRequest:
       type: object
       required:
@@ -263,14 +271,66 @@ components:
           $ref: '#/components/schemas/RefreshService'
         displayMethod:
           $ref: '#/components/schemas/DisplayMethod'
-    GenericErrorMessage:
+    CredentialLinkQrCodeResponse:
       type: object
       required:
+      - issuer
+      - deepLink
+      - universalLink
       - message
+      - sessionID
+      - linkID
+      - linkDetail
       properties:
+        issuer:
+          $ref: '#/components/schemas/IssuerDescription'
         message:
           type: string
-          example: Something happen
+        deepLink:
+          type: string
+          example: iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4
+        universalLink:
+          type: string
+          example: https://wallet.privado.id#request_uri=url
+        linkDetail:
+          $ref: '#/components/schemas/LinkSimple'
+    LinkSimple:
+      type: object
+      required:
+      - id
+      - schemaUrl
+      - schemaType
+      - proofTypes
+      - schemaHash
+      properties:
+        id:
+          type: string
+          x-go-type: uuid.UUID
+          x-go-type-import:
+            name: uuid
+            path: github.com/google/uuid
+          example: 8edd8112-c415-11ed-b036-debe37e1cbd6
+        schemaUrl:
+          type: string
+          example: https://someValidURL.com
+        schemaType:
+          type: string
+          example: KYCAgeCredential
+        schemaHash:
+          type: string
+          example: c9b2370371b7fa8b3dab2a5ba81b6838
+        proofTypes:
+          type: array
+          items:
+            type: string
+          example:
+          - BJJSignature2021
+    Offer:
+      type: object
+      x-go-type: protocol.CredentialsOfferMessage
+      x-go-type-import:
+        name: protocol
+        path: github.com/iden3/iden3comm/v2/protocol
     Link:
       type: object
       required:
@@ -346,98 +406,13 @@ components:
           type: string
           x-omitempty: false
           example: https://wallet.privado.id#request_uri=url
-    GenericMessage:
+    CredentialSubject:
       type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-    DisplayMethod:
-      type: object
-      required:
-      - id
-      - type
-      properties:
-        id:
-          type: string
-          x-omitempty: false
-        type:
-          type: string
-          x-omitempty: false
-          enum:
-          - Iden3BasicDisplayMethodV1
-    UUIDResponse:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-omitempty: false
-          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
-    TimeUTC:
-      type: string
-      x-go-type: timeapi.Time
-      x-go-type-import:
-        name: timeapi
-        path: github.com/polygonid/sh-id-platform/internal/timeapi
-      example: '2023-10-26T10:59:08Z'
       x-omitempty: false
-    CredentialLinkQrCodeResponse:
-      type: object
-      required:
-      - issuer
-      - deepLink
-      - universalLink
-      - message
-      - sessionID
-      - linkID
-      - linkDetail
-      properties:
-        issuer:
-          $ref: '#/components/schemas/IssuerDescription'
-        message:
-          type: string
-        deepLink:
-          type: string
-          example: iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4
-        universalLink:
-          type: string
-          example: https://wallet.privado.id#request_uri=url
-        linkDetail:
-          $ref: '#/components/schemas/LinkSimple'
-    LinkSimple:
-      type: object
-      required:
-      - id
-      - schemaUrl
-      - schemaType
-      - proofTypes
-      - schemaHash
-      properties:
-        id:
-          type: string
-          x-go-type: uuid.UUID
-          x-go-type-import:
-            name: uuid
-            path: github.com/google/uuid
-          example: 8edd8112-c415-11ed-b036-debe37e1cbd6
-        schemaUrl:
-          type: string
-          example: https://someValidURL.com
-        schemaType:
-          type: string
-          example: KYCAgeCredential
-        schemaHash:
-          type: string
-          example: c9b2370371b7fa8b3dab2a5ba81b6838
-        proofTypes:
-          type: array
-          items:
-            type: string
-          example:
-          - BJJSignature2021
+      example:
+        birthday: 19960424
+        documentType: 2
+        type: KYCAgeCredential
     RefreshService:
       type: object
       required:
@@ -464,20 +439,57 @@ components:
         logo:
           type: string
           example: http://my-public-logo/logo.jpg
-    Offer:
-      type: object
-      x-go-type: protocol.CredentialsOfferMessage
+    TimeUTC:
+      type: string
+      x-go-type: timeapi.Time
       x-go-type-import:
-        name: protocol
-        path: github.com/iden3/iden3comm/v2/protocol
+        name: timeapi
+        path: github.com/polygonid/sh-id-platform/internal/timeapi
+      example: '2023-10-26T10:59:08Z'
+      x-omitempty: false
+    UUIDResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
+    DisplayMethod:
+      type: object
+      required:
+      - id
+      - type
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+        type:
+          type: string
+          x-omitempty: false
+          enum:
+          - Iden3BasicDisplayMethodV1
+  responses:
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
   parameters:
-    pathIdentifier:
-      name: identifier
-      in: path
-      required: true
-      description: Issuer identifier
-      schema:
-        type: string
     linkID:
       name: linkID
       in: query
@@ -504,25 +516,13 @@ components:
         x-go-type-import:
           name: uuid
           path: github.com/google/uuid
-  responses:
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '500':
-      description: Internal Server  error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
+    pathIdentifier:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
   securitySchemes:
     basicAuth:
       type: http
