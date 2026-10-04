@@ -60,6 +60,19 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
+  responses:
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '500':
+      description: Internal Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
   schemas:
     GenericErrorMessage:
       type: object
@@ -69,26 +82,13 @@ components:
         message:
           type: string
           example: Something happen
-    CallbackResponse:
-      type: object
     Health:
       type: object
       x-omitempty: false
       example:
         healthy: true
-  responses:
-    '500':
-      description: Internal Server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
+    CallbackResponse:
+      type: object
   parameters:
     sessionID:
       name: sessionID

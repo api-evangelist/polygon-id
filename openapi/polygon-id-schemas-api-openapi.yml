@@ -126,22 +126,26 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
+  responses:
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
   schemas:
-    GenericMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-    GenericErrorMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          example: Something happen
     Schema:
       type: object
       required:
@@ -195,6 +199,21 @@ components:
           type: string
           x-go-type: uuid.UUID
           x-omitempty: false
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
     ImportSchemaRequest:
       type: object
       required:
@@ -221,14 +240,6 @@ components:
           type: string
           x-go-type: uuid.UUID
           x-omitempty: false
-    TimeUTC:
-      type: string
-      x-go-type: timeapi.Time
-      x-go-type-import:
-        name: timeapi
-        path: github.com/polygonid/sh-id-platform/internal/timeapi
-      example: '2023-10-26T10:59:08Z'
-      x-omitempty: false
     UUIDResponse:
       type: object
       required:
@@ -238,26 +249,22 @@ components:
           type: string
           x-omitempty: false
           example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
-  responses:
-    '500':
-      description: Internal Server  error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
+    TimeUTC:
+      type: string
+      x-go-type: timeapi.Time
+      x-go-type-import:
+        name: timeapi
+        path: github.com/polygonid/sh-id-platform/internal/timeapi
+      example: '2023-10-26T10:59:08Z'
+      x-omitempty: false
   parameters:
+    pathIdentifier:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
     id:
       name: id
       in: path
@@ -271,13 +278,6 @@ components:
         x-go-type-import:
           name: uuid
           path: github.com/google/uuid
-    pathIdentifier:
-      name: identifier
-      in: path
-      required: true
-      description: Issuer identifier
-      schema:
-        type: string
   securitySchemes:
     basicAuth:
       type: http

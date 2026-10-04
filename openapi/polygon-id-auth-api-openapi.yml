@@ -90,14 +90,6 @@ paths:
           $ref: '#/components/responses/500'
 components:
   schemas:
-    GenericErrorMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          example: Something happen
     GetAuthenticationConnectionResponse:
       type: object
       required:
@@ -105,21 +97,6 @@ components:
       properties:
         connection:
           $ref: '#/components/schemas/AuthenticationConnection'
-    UUIDString:
-      type: string
-      x-omitempty: false
-      example: b7144f1c-d54e-4f67-a4f1-f2e7ff1beb07
-    AuthenticationResponse:
-      type: object
-      required:
-      - message
-      - sessionID
-      properties:
-        message:
-          type: string
-          example: iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4
-        sessionID:
-          $ref: '#/components/schemas/UUIDString'
     AuthenticationConnection:
       type: object
       required:
@@ -139,6 +116,25 @@ components:
           $ref: '#/components/schemas/TimeUTC'
         modifiedAt:
           $ref: '#/components/schemas/TimeUTC'
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    AuthenticationResponse:
+      type: object
+      required:
+      - message
+      - sessionID
+      properties:
+        message:
+          type: string
+          example: iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4
+        sessionID:
+          $ref: '#/components/schemas/UUIDString'
     TimeUTC:
       type: string
       x-go-type: timeapi.Time
@@ -147,9 +143,19 @@ components:
         path: github.com/polygonid/sh-id-platform/internal/timeapi
       example: '2023-10-26T10:59:08Z'
       x-omitempty: false
+    UUIDString:
+      type: string
+      x-omitempty: false
+      example: b7144f1c-d54e-4f67-a4f1-f2e7ff1beb07
   responses:
     '401':
       description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '404':
+      description: Not found
       content:
         application/json:
           schema:
@@ -166,13 +172,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
   parameters:
+    pathIdentifier:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
     id:
       name: id
       in: path
@@ -186,13 +193,6 @@ components:
         x-go-type-import:
           name: uuid
           path: github.com/google/uuid
-    pathIdentifier:
-      name: identifier
-      in: path
-      required: true
-      description: Issuer identifier
-      schema:
-        type: string
     sessionID:
       name: sessionID
       in: query

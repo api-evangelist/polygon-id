@@ -219,81 +219,26 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 components:
+  responses:
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '500':
+      description: Internal Server  error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
   schemas:
-    GenericMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-    GenericErrorMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          example: Something happen
-    CreateLinkRequest:
-      type: object
-      required:
-      - schemaID
-      - signatureProof
-      - mtProof
-      - credentialSubject
-      properties:
-        schemaID:
-          type: string
-          x-go-type: uuid.UUID
-          x-omitempty: false
-        credentialExpiration:
-          type: string
-          format: date-time
-          example: 2025-04-17 11:40:43.681857-03:00
-        expiration:
-          type: string
-          format: date-time
-          example: 2025-04-17 11:40:43.681857-03:00
-        limitedClaims:
-          type: integer
-          example: 5
-          x-omitempty: false
-        signatureProof:
-          type: boolean
-          example: true
-        mtProof:
-          type: boolean
-          example: false
-        credentialSubject:
-          $ref: '#/components/schemas/CredentialSubject'
-        refreshService:
-          $ref: '#/components/schemas/RefreshService'
-        displayMethod:
-          $ref: '#/components/schemas/DisplayMethod'
-    CredentialLinkQrCodeResponse:
-      type: object
-      required:
-      - issuer
-      - deepLink
-      - universalLink
-      - message
-      - sessionID
-      - linkID
-      - linkDetail
-      properties:
-        issuer:
-          $ref: '#/components/schemas/IssuerDescription'
-        message:
-          type: string
-        deepLink:
-          type: string
-          example: iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4
-        universalLink:
-          type: string
-          example: https://wallet.privado.id#request_uri=url
-        linkDetail:
-          $ref: '#/components/schemas/LinkSimple'
     LinkSimple:
       type: object
       required:
@@ -325,12 +270,55 @@ components:
             type: string
           example:
           - BJJSignature2021
-    Offer:
+    CredentialSubject:
       type: object
-      x-go-type: protocol.CredentialsOfferMessage
-      x-go-type-import:
-        name: protocol
-        path: github.com/iden3/iden3comm/v2/protocol
+      x-omitempty: false
+      example:
+        birthday: 19960424
+        documentType: 2
+        type: KYCAgeCredential
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    IssuerDescription:
+      type: object
+      required:
+      - displayName
+      - logo
+      properties:
+        displayName:
+          type: string
+          example: my issuer
+        logo:
+          type: string
+          example: http://my-public-logo/logo.jpg
+    CredentialLinkQrCodeResponse:
+      type: object
+      required:
+      - issuer
+      - deepLink
+      - universalLink
+      - message
+      - sessionID
+      - linkID
+      - linkDetail
+      properties:
+        issuer:
+          $ref: '#/components/schemas/IssuerDescription'
+        message:
+          type: string
+        deepLink:
+          type: string
+          example: iden3comm://?request_uri=https%3A%2F%2Fissuer-demo.privado.id%2Fapi%2Fqr-store%3Fid%3Df780a169-8959-4380-9461-f7200e2ed3f4
+        universalLink:
+          type: string
+          example: https://wallet.privado.id#request_uri=url
+        linkDetail:
+          $ref: '#/components/schemas/LinkSimple'
     Link:
       type: object
       required:
@@ -406,56 +394,6 @@ components:
           type: string
           x-omitempty: false
           example: https://wallet.privado.id#request_uri=url
-    CredentialSubject:
-      type: object
-      x-omitempty: false
-      example:
-        birthday: 19960424
-        documentType: 2
-        type: KYCAgeCredential
-    RefreshService:
-      type: object
-      required:
-      - id
-      - type
-      properties:
-        id:
-          type: string
-          x-omitempty: false
-        type:
-          type: string
-          x-omitempty: false
-          enum:
-          - Iden3RefreshService2023
-    IssuerDescription:
-      type: object
-      required:
-      - displayName
-      - logo
-      properties:
-        displayName:
-          type: string
-          example: my issuer
-        logo:
-          type: string
-          example: http://my-public-logo/logo.jpg
-    TimeUTC:
-      type: string
-      x-go-type: timeapi.Time
-      x-go-type-import:
-        name: timeapi
-        path: github.com/polygonid/sh-id-platform/internal/timeapi
-      example: '2023-10-26T10:59:08Z'
-      x-omitempty: false
-    UUIDResponse:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-omitempty: false
-          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
     DisplayMethod:
       type: object
       required:
@@ -470,39 +408,95 @@ components:
           x-omitempty: false
           enum:
           - Iden3BasicDisplayMethodV1
-  responses:
-    '500':
-      description: Internal Server  error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
+    TimeUTC:
+      type: string
+      x-go-type: timeapi.Time
+      x-go-type-import:
+        name: timeapi
+        path: github.com/polygonid/sh-id-platform/internal/timeapi
+      example: '2023-10-26T10:59:08Z'
+      x-omitempty: false
+    CreateLinkRequest:
+      type: object
+      required:
+      - schemaID
+      - signatureProof
+      - mtProof
+      - credentialSubject
+      properties:
+        schemaID:
+          type: string
+          x-go-type: uuid.UUID
+          x-omitempty: false
+        credentialExpiration:
+          type: string
+          format: date-time
+          example: 2025-04-17 11:40:43.681857-03:00
+        expiration:
+          type: string
+          format: date-time
+          example: 2025-04-17 11:40:43.681857-03:00
+        limitedClaims:
+          type: integer
+          example: 5
+          x-omitempty: false
+        signatureProof:
+          type: boolean
+          example: true
+        mtProof:
+          type: boolean
+          example: false
+        credentialSubject:
+          $ref: '#/components/schemas/CredentialSubject'
+        refreshService:
+          $ref: '#/components/schemas/RefreshService'
+        displayMethod:
+          $ref: '#/components/schemas/DisplayMethod'
+    UUIDResponse:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+          example: c79c9c04-8c98-40f2-a7a0-5eeabf08d836
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    Offer:
+      type: object
+      x-go-type: protocol.CredentialsOfferMessage
+      x-go-type-import:
+        name: protocol
+        path: github.com/iden3/iden3comm/v2/protocol
+    RefreshService:
+      type: object
+      required:
+      - id
+      - type
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+        type:
+          type: string
+          x-omitempty: false
+          enum:
+          - Iden3RefreshService2023
   parameters:
-    linkID:
-      name: linkID
-      in: query
+    pathIdentifier:
+      name: identifier
+      in: path
       required: true
-      description: 'Session ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd
-
-        '
+      description: Issuer identifier
       schema:
         type: string
-        x-go-type: uuid.UUID
-        x-go-type-import:
-          name: uuid
-          path: github.com/google/uuid
     id:
       name: id
       in: path
@@ -516,13 +510,19 @@ components:
         x-go-type-import:
           name: uuid
           path: github.com/google/uuid
-    pathIdentifier:
-      name: identifier
-      in: path
+    linkID:
+      name: linkID
+      in: query
       required: true
-      description: Issuer identifier
+      description: 'Session ID e.g: 89d298fa-15a6-4a1d-ab13-d1069467eedd
+
+        '
       schema:
         type: string
+        x-go-type: uuid.UUID
+        x-go-type-import:
+          name: uuid
+          path: github.com/google/uuid
   securitySchemes:
     basicAuth:
       type: http

@@ -237,21 +237,6 @@ paths:
           $ref: '#/components/responses/500'
 components:
   schemas:
-    GenericMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-    GenericErrorMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          example: Something happen
     AuthenticationConnection:
       type: object
       required:
@@ -271,48 +256,6 @@ components:
           $ref: '#/components/schemas/TimeUTC'
         modifiedAt:
           $ref: '#/components/schemas/TimeUTC'
-    EncryptedVC:
-      type: object
-      required:
-      - id
-      - data
-      - proof
-      - context
-      - type
-      - issuanceDate
-      - credentialStatus
-      properties:
-        id:
-          type: string
-          x-omitempty: false
-        data:
-          type: object
-          x-go-type: protocol.JWEJSONEncryption
-          x-go-type-import:
-            name: protocol
-            path: github.com/iden3/iden3comm/v2/protocol
-        proof:
-          type: object
-          x-go-type: verifiable.CredentialProofs
-          x-go-type-import:
-            name: verifiable
-            path: github.com/iden3/go-schema-processor/v2/verifiable
-        context:
-          type: string
-          example: https://www.w3.org/2018/credentials/examples/v1
-        type:
-          type: string
-          example: KYCAgeCredential
-        expirationDate:
-          $ref: '#/components/schemas/TimeUTC'
-        issuanceDate:
-          $ref: '#/components/schemas/TimeUTC'
-        credentialStatus:
-          type: object
-          x-go-type: verifiable.CredentialStatus
-          x-go-type-import:
-            name: verifiable
-            path: github.com/iden3/go-schema-processor/v2/verifiable
     GetConnectionResponse:
       type: object
       required:
@@ -357,10 +300,13 @@ components:
         issuerDoc:
           type: object
           format: byte
-    UUIDString:
-      type: string
-      x-omitempty: false
-      example: b7144f1c-d54e-4f67-a4f1-f2e7ff1beb07
+    GenericMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
     ConnectionsPaginated:
       type: object
       required:
@@ -371,6 +317,56 @@ components:
           $ref: '#/components/schemas/GetConnectionsResponse'
         meta:
           $ref: '#/components/schemas/PaginatedMetadata'
+    EncryptedVC:
+      type: object
+      required:
+      - id
+      - data
+      - proof
+      - context
+      - type
+      - issuanceDate
+      - credentialStatus
+      properties:
+        id:
+          type: string
+          x-omitempty: false
+        data:
+          type: object
+          x-go-type: protocol.JWEJSONEncryption
+          x-go-type-import:
+            name: protocol
+            path: github.com/iden3/iden3comm/v2/protocol
+        proof:
+          type: object
+          x-go-type: verifiable.CredentialProofs
+          x-go-type-import:
+            name: verifiable
+            path: github.com/iden3/go-schema-processor/v2/verifiable
+        context:
+          type: string
+          example: https://www.w3.org/2018/credentials/examples/v1
+        type:
+          type: string
+          example: KYCAgeCredential
+        expirationDate:
+          $ref: '#/components/schemas/TimeUTC'
+        issuanceDate:
+          $ref: '#/components/schemas/TimeUTC'
+        credentialStatus:
+          type: object
+          x-go-type: verifiable.CredentialStatus
+          x-go-type-import:
+            name: verifiable
+            path: github.com/iden3/go-schema-processor/v2/verifiable
+    TimeUTC:
+      type: string
+      x-go-type: timeapi.Time
+      x-go-type-import:
+        name: timeapi
+        path: github.com/polygonid/sh-id-platform/internal/timeapi
+      example: '2023-10-26T10:59:08Z'
+      x-omitempty: false
     GetAuthenticationConnectionResponse:
       type: object
       required:
@@ -378,29 +374,6 @@ components:
       properties:
         connection:
           $ref: '#/components/schemas/AuthenticationConnection'
-    GetConnectionsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/GetConnectionResponse'
-    PaginatedMetadata:
-      type: object
-      required:
-      - total
-      - page
-      - max_results
-      properties:
-        total:
-          type: integer
-          format: uint
-          example: 1
-        page:
-          type: integer
-          format: uint
-          example: 1
-        max_results:
-          type: integer
-          format: uint
-          example: 50
     Credential:
       type: object
       required:
@@ -432,15 +405,48 @@ components:
             path: github.com/iden3/go-schema-processor/v2/verifiable
         encryptedVC:
           $ref: '#/components/schemas/EncryptedVC'
-    TimeUTC:
+    PaginatedMetadata:
+      type: object
+      required:
+      - total
+      - page
+      - max_results
+      properties:
+        total:
+          type: integer
+          format: uint
+          example: 1
+        page:
+          type: integer
+          format: uint
+          example: 1
+        max_results:
+          type: integer
+          format: uint
+          example: 50
+    GenericErrorMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Something happen
+    GetConnectionsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/GetConnectionResponse'
+    UUIDString:
       type: string
-      x-go-type: timeapi.Time
-      x-go-type-import:
-        name: timeapi
-        path: github.com/polygonid/sh-id-platform/internal/timeapi
-      example: '2023-10-26T10:59:08Z'
       x-omitempty: false
+      example: b7144f1c-d54e-4f67-a4f1-f2e7ff1beb07
   responses:
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GenericErrorMessage'
     '401':
       description: Unauthorized
       content:
@@ -453,12 +459,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GenericErrorMessage'
-    '404':
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GenericErrorMessage'
     '400':
       description: Bad Request
       content:
@@ -466,6 +466,13 @@ components:
           schema:
             $ref: '#/components/schemas/GenericErrorMessage'
   parameters:
+    pathIdentifier:
+      name: identifier
+      in: path
+      required: true
+      description: Issuer identifier
+      schema:
+        type: string
     id:
       name: id
       in: path
@@ -479,13 +486,6 @@ components:
         x-go-type-import:
           name: uuid
           path: github.com/google/uuid
-    pathIdentifier:
-      name: identifier
-      in: path
-      required: true
-      description: Issuer identifier
-      schema:
-        type: string
   securitySchemes:
     basicAuth:
       type: http
