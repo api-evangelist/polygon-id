@@ -467,6 +467,12 @@ apis:
   - type: FinOps
     url: https://github.com/api-evangelist/polygon-id/blob/main/finops/finops.yml
 common:
+  - type: Plans
+    url: plans/plans.yml
+  - type: RateLimits
+    url: rate-limits/rate-limits.yml
+  - type: FinOps
+    url: finops/finops.yml
   - type: CapabilityMap
     url: capabilities/polygon-id-capability-edges.yml
     name: Polygon ID Business Capability Map
