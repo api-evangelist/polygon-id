@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Polygon ID (Privado ID) Plans
 description: >
   Polygon ID (rebranded as Privado ID) is open-source and free to self-host.
@@ -53,3 +57,32 @@ plans:
       - On-chain issuance and revocation
       - Trust registry integration
     contact: https://www.privado.id/
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  units: []
+  plans:
+  - name: Open Source / Self-Hosted
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Managed Cloud (Credential Fees)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - per-use
+  - name: Enterprise
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods:
+    - term
